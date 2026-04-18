@@ -1,289 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal CV | Minimalist Splash</title>
-    <!-- Google Fonts: Inter for UI and Libre Bodoni for sophisticated headings -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --accent-color: #000000;
-            --spacing-unit: 2rem;
-            --transition-speed: 0.5s;
-            /* Font Definitions */
-            --font-body: 'Inter', sans-serif;
-            --font-heading: 'Libre Bodoni', serif;
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sydney Talman | Portfolio</title>
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Navigation -->
+      <nav class="main-nav">
+        <div class="logo">S. Talman</div>
+        
+        <ul class="nav-links desktop-only">
+          <li><a href="#about">about</a></li>
+          <li><a href="#experience">experience</a></li>
+          <li><a href="#work">work</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        <button class="menu-toggle mobile-only" id="menuToggle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </nav>
 
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+      <!-- Mobile Menu Overlay -->
+      <div class="mobile-menu" id="mobileMenu">
+        <button class="menu-close" id="menuClose">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <a href="#about">about</a>
+        <a href="#experience">experience</a>
+        <a href="#work">work</a>
+        <a href="#contact">contact</a>
+      </div>
 
-        /* Scalable Container Logic */
-        .view {
-            display: none;
-            min-height: 100vh;
-            padding: var(--spacing-unit);
-            opacity: 0;
-            transition: opacity var(--transition-speed) ease-in-out;
-        }
-
-        .view.active {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 1;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .logo {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-style: italic;
-            letter-spacing: -0.02em;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        /* Home/Splash Content */
-        .hero-content {
-            max-width: 900px;
-            text-align: center;
-        }
-
-        h1 {
-            font-family: var(--font-heading);
-            font-size: clamp(2.8rem, 10vw, 5.5rem);
-            font-weight: 400;
-            line-height: 1;
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
-        }
-
-        .tagline {
-            color: var(--text-secondary);
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            max-width: 550px;
-            margin: 0 auto 3rem auto;
-            font-weight: 300;
-            letter-spacing: 0.02em;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 1.2rem 3rem;
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            border: 1px solid var(--accent-color);
-        }
-
-        .btn-primary {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: transparent;
-            color: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            color: var(--accent-color);
-        }
-
-        .btn-secondary:hover {
-            background-color: #f9f9f9;
-            transform: translateY(-2px);
-        }
-
-        /* Footer / Socials */
-        footer {
-            position: fixed;
-            bottom: 2.5rem;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            padding: 0 2rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-        }
-
-        .social-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            transition: color 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--text-primary);
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1.5rem;
-            }
-            .nav-links {
-                display: none;
-            }
-            .cta-group {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 0 10%;
-            }
-            h1 {
-                font-size: 3.2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <nav>
-        <a href="#" class="logo" onclick="navigateTo('home')">J. DOE</a>
-        <div class="nav-links">
-            <a href="#" onclick="navigateTo('home')">Home</a>
-            <a href="#" onclick="navigateTo('about')">About</a>
-            <a href="#" onclick="navigateTo('work')">Work</a>
-            <a href="mailto:hello@example.com">Contact</a>
+      <!-- Hero Section -->
+      <main class="hero reveal">
+        <h1 class="hero-title">Sydney Talman</h1>
+        <p class="hero-subtitle">
+          Multidisciplinary Creative Strategist focused on building digital identities for the next generation of culture-defining brands.
+        </p>
+        <div class="cta-container">
+          <a href="#about" class="btn">View Selected Works</a>
         </div>
-    </nav>
+      </main>
 
-    <!-- Home View -->
-    <main id="home" class="view active">
-        <section class="hero-content">
-            <h1>Creative Designer <br><em>&</em> Developer.</h1>
-            <p class="tagline">Crafting digital experiences with a focus on minimalism, function, and refined aesthetics.</p>
-            <div class="cta-group">
-                <a href="#" class="btn btn-primary" onclick="navigateTo('work')">View Portfolio</a>
-                <a href="#" class="btn btn-secondary" onclick="navigateTo('about')">Read Resume</a>
+      <!-- About Section -->
+      <section id="about" class="about-section reveal">
+        <div class="about-grid">
+          <div class="reveal-left">
+            <div class="image-wrapper">
+              <img src="https://picsum.photos/seed/minimal/1000/1250" alt="Work Background" referrerPolicy="no-referrer" />
             </div>
-        </section>
-    </main>
-
-    <!-- Placeholder Work View -->
-    <section id="work" class="view">
-        <div class="hero-content">
-            <h1>Selected Work</h1>
-            <p class="tagline">This section is currently under development.</p>
-            <a href="#" class="btn btn-secondary" onclick="navigateTo('home')">Go Back</a>
+          </div>
+          <div class="about-content reveal-right">
+            <h3 class="section-title-large">Philosophy</h3>
+            <p class="section-text">
+              I believe design is more than how things look—it's how they feel, work, and persist in memory. My work focuses on removing the unnecessary to reveal the essential.
+            </p>
+            <div class="about-meta">
+              <div class="meta-col">
+                <h4>Focus</h4>
+                <ul>
+                  <li>Design Systems</li>
+                  <li>UX Research</li>
+                  <li>Brand Identity</li>
+                </ul>
+              </div>
+              <div class="meta-col">
+                <h4>Tools</h4>
+                <ul>
+                  <li>Figma</li>
+                  <li>React / Framer</li>
+                  <li>After Effects</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Placeholder About View -->
-    <section id="about" class="view">
-        <div class="hero-content">
-            <h1>About Me</h1>
-            <p class="tagline">A brief overview of my professional journey and skills.</p>
-            <a href="#" class="btn btn-secondary" onclick="navigateTo('home')">Go Back</a>
+      <!-- Experience Section -->
+      <section id="experience" class="experience-section reveal">
+        <h3 class="small-title">Experience</h3>
+        <div class="experience-list">
+          <div class="exp-item">
+            <div class="exp-year">2024 — Present</div>
+            <div class="exp-role">Senior Product Designer</div>
+            <div class="exp-company">Aether Dynamics</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-year">2022 — 2024</div>
+            <div class="exp-role">Product Designer</div>
+            <div class="exp-company">Lumina Labs</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-year">2020 — 2022</div>
+            <div class="exp-role">Visual Designer</div>
+            <div class="exp-company">Studio Minimal</div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <footer>
-        <div class="social-links">
-            <a href="#">LINKEDIN</a>
-            <a href="#">INSTAGRAM</a>
-            <a href="#">GITHUB</a>
+      <!-- Footer -->
+      <footer class="main-footer">
+        <div class="footer-loc">Based in San Francisco &bull; Remote Worldwide</div>
+        <div class="footer-status">
+          <span class="status-dot"></span>Available for Projects
         </div>
-    </footer>
-
-    <script>
-        function navigateTo(viewId) {
-            const views = document.querySelectorAll('.view');
-            const targetView = document.getElementById(viewId);
-
-            if (!targetView) return;
-
-            views.forEach(view => {
-                view.style.opacity = '0';
-                setTimeout(() => {
-                    view.classList.remove('active');
-                }, 300);
-            });
-
-            setTimeout(() => {
-                targetView.classList.add('active');
-                setTimeout(() => {
-                    targetView.style.opacity = '1';
-                }, 50);
-            }, 300);
-
-            window.location.hash = viewId;
-        }
-
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.replace('#', '');
-            if (hash) navigateTo(hash);
-        });
-
-        window.onload = () => {
-            const hash = window.location.hash.replace('#', '');
-            if (hash) navigateTo(hash);
-        };
-    </script>
-</body>
+        <div class="footer-socials">
+          <a href="#">Linkedin</a>
+          <a href="#">Github</a>
+          <a href="#">Mail</a>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
+
