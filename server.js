@@ -10,9 +10,8 @@ const PORT = 3000;
 
 // Serve static files from the root directory
 app.use(express.static(__dirname));
-app.use('/src', express.static(path.join(__dirname, 'src')));
 
-// Fallback for SPA (though not strictly an SPA anymore)
+// Fallback for SPA
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
