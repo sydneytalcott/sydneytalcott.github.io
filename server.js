@@ -13,6 +13,11 @@ const publicPath = path.resolve(__dirname);
 // Serve static files from the root directory
 app.use(express.static(publicPath));
 
+// Specific routes
+app.get('/work', (req, res) => {
+  res.sendFile(path.join(publicPath, 'work.html'));
+});
+
 // Fallback for SPA
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));

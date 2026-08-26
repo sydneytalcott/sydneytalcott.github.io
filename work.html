@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCRMTSE0B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-TYCRMTSE0B');
+    </script>
+    <title>Work — Sydney Talcott</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/index.css?v=2" />
+    <!-- Three.js for 3D Mesh Rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Navigation -->
+      <nav class="main-nav">
+        <ul class="nav-links desktop-only">
+          <li><a href="index.html#about">about</a></li>
+          <li><a href="index.html#experience">experience</a></li>
+          <li><a href="work.html" class="active">work</a></li>
+          <li><a href="mailto:sydney.tal@gmail.com">contact</a></li>
+        </ul>
+
+        <button class="menu-toggle mobile-only" id="menuToggle" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </nav>
+
+      <!-- Mobile Menu Overlay -->
+      <div class="mobile-menu" id="mobileMenu">
+        <button class="menu-close" id="menuClose" aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <a href="index.html#about">about</a>
+        <a href="index.html#experience">experience</a>
+        <a href="work.html" class="active">work</a>
+        <a href="mailto:sydney.tal@gmail.com">contact</a>
+      </div>
+
+      <!-- Page Header -->
+      <header class="work-header reveal">
+        <div class="work-header-top">
+          <h1 class="page-title">Work</h1>
+          <span class="page-category-tag">Selected Systems & Explorations</span>
+        </div>
+        <p class="work-header-subtitle">
+          Interactive studies and product prototypes at the intersection of spatial computing, generative geometry, and human-computer interfaces.
+        </p>
+      </header>
+
+      <!-- Main Project Showcase: Interactive 3D Mesh -->
+      <main>
+        <article class="project-card reveal" id="interactive-3d-mesh">
+          <!-- 3D WebGL Canvas Interactive Stage -->
+          <div class="project-canvas-wrapper" id="canvasContainer">
+            <canvas id="meshCanvas" class="three-canvas"></canvas>
+            
+            <!-- Canvas HUD Overlay -->
+            <div class="canvas-hud">
+              <div class="hud-badge">
+                <span class="hud-live-dot"></span>
+                <span>Live WebGL Stage</span>
+              </div>
+              <div class="hud-stats">
+                <span>VTX: </span><span id="statsVertices">2,809</span> &bull; 
+                <span>FPS: </span><span id="statsFps">60</span>
+              </div>
+            </div>
+
+            <!-- Canvas Interactive Toolbar -->
+            <div class="canvas-toolbar">
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn active" data-geo="terrain">Terrain</button>
+                <button type="button" class="tool-btn" data-geo="geosphere">Geosphere</button>
+                <button type="button" class="tool-btn" data-geo="torusknot">Torus Knot</button>
+                <button type="button" class="tool-btn" data-geo="waveplane">Ribbon</button>
+              </div>
+
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn active" data-mode="dual">Dual Mesh</button>
+                <button type="button" class="tool-btn" data-mode="wireframe">Wireframe</button>
+                <button type="button" class="tool-btn" data-mode="solid">Solid</button>
+                <button type="button" class="tool-btn" data-mode="points">Points</button>
+              </div>
+
+              <div class="toolbar-group">
+                <button type="button" class="tool-btn active" id="btnRotate">Auto-Rotate</button>
+                <button type="button" class="tool-btn" id="btnReset">Reset Camera</button>
+              </div>
+
+              <div class="tool-hint">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span>Drag to rotate &bull; Hover for ripple</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Details & Footer Nav -->
+          <div class="project-content">
+            <div class="project-meta-row">
+              <div>
+                <h2 class="project-headline">Interactive 3D Mesh</h2>
+              </div>
+              <div class="project-tags">
+                <span class="tag-badge">Spatial Computing</span>
+                <span class="tag-badge">WebGL / Three.js</span>
+                <span class="tag-badge">Generative Geometry</span>
+              </div>
+            </div>
+
+            <div class="work-footer-nav">
+              <a href="index.html" class="back-home-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Back to Overview</span>
+              </a>
+              <a href="mailto:sydney.tal@gmail.com" class="btn">Get In Touch</a>
+            </div>
+          </div>
+        </article>
+      </main>
+
+      <!-- Footer -->
+      <footer class="main-footer">
+        <div class="footer-loc">Based by the beach &bull; Remote Worldwide</div>
+        <div class="footer-socials">
+          <a href="https://www.linkedin.com/in/sydneytalcott/">Linkedin</a>
+          <a href="https://github.com/sydneytalcott">Github</a>
+          <a href="mailto:sydney.tal@gmail.com">Mail</a>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Page Script -->
+    <script type="module" src="src/work.js"></script>
+  </body>
+</html>
