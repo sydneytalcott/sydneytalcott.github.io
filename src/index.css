@@ -50,9 +50,29 @@ body {
 /* Navigation */
 .main-nav {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 80px;
+}
+
+.nav-brand {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-family: var(--f-serif);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  transition: opacity 0.2s;
+}
+
+.nav-brand:hover {
+  opacity: 0.5;
+}
+
+.nav-brand:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 
 .nav-links {
