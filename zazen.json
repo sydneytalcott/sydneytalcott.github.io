@@ -1,0 +1,152 @@
+{
+  "schemas": {
+    "landing": {
+      "name": "Home Page",
+      "fields": [
+        { "name": "title", "label": "Browser Title", "type": "text", "required": true },
+        { "name": "heroName", "label": "Hero Name", "type": "text", "required": true },
+        { "name": "heroSubtitle", "label": "Hero Subtitle", "type": "textarea" },
+        { "name": "ctaText", "label": "CTA Button Text", "type": "text" },
+        { "name": "ctaLink", "label": "CTA Link URL", "type": "text" },
+        { "name": "aboutTitle", "label": "About Heading", "type": "text" },
+        { "name": "aboutImage", "label": "About Portrait", "type": "image", "folder": "media" },
+        { "name": "aboutImageAlt", "label": "Portrait Alt Text", "type": "text" },
+        { "name": "aboutText", "label": "About Text", "type": "textarea" },
+        { "name": "focusLabel", "label": "Focus Column Heading", "type": "text" },
+        { "name": "focus1", "label": "Focus 1", "type": "text" },
+        { "name": "focus2", "label": "Focus 2", "type": "text" },
+        { "name": "focus3", "label": "Focus 3", "type": "text" },
+        { "name": "focus4", "label": "Focus 4", "type": "text" },
+        { "name": "skillsLabel", "label": "Skills Column Heading", "type": "text" },
+        { "name": "skill1", "label": "Skill 1", "type": "text" },
+        { "name": "skill2", "label": "Skill 2", "type": "text" },
+        { "name": "skill3", "label": "Skill 3", "type": "text" },
+        { "name": "skill4", "label": "Skill 4", "type": "text" },
+        { "name": "experienceTitle", "label": "Experience Heading", "type": "text" },
+        { "name": "exp1Years", "label": "Experience 1 Years", "type": "text" },
+        { "name": "exp1Role", "label": "Experience 1 Role", "type": "text" },
+        { "name": "exp1Company", "label": "Experience 1 Company", "type": "text" },
+        { "name": "exp2Years", "label": "Experience 2 Years", "type": "text" },
+        { "name": "exp2Role", "label": "Experience 2 Role", "type": "text" },
+        { "name": "exp2Company", "label": "Experience 2 Company", "type": "text" },
+        { "name": "exp3Years", "label": "Experience 3 Years", "type": "text" },
+        { "name": "exp3Role", "label": "Experience 3 Role", "type": "text" },
+        { "name": "exp3Company", "label": "Experience 3 Company", "type": "text" }
+      ]
+    },
+    "work": {
+      "name": "Work Page",
+      "fields": [
+        { "name": "title", "label": "Page Title", "type": "text", "required": true },
+        { "name": "categoryTag", "label": "Category Tag", "type": "text" },
+        { "name": "intro", "label": "Intro", "type": "textarea" },
+        { "name": "projectTitle", "label": "Project Title", "type": "text" },
+        { "name": "tag1", "label": "Tag 1", "type": "text" },
+        { "name": "tag2", "label": "Tag 2", "type": "text" },
+        { "name": "tag3", "label": "Tag 3", "type": "text" },
+        { "name": "backLabel", "label": "Back Link Text", "type": "text" },
+        { "name": "contactCta", "label": "Contact Button Text", "type": "text" }
+      ]
+    }
+  },
+  "templates": {
+    "landing": { "file": "registry/templates/landing.html", "schema": "landing" },
+    "work": { "file": "registry/templates/work.html", "schema": "work" }
+  },
+  "components": {
+    "head": "registry/components/head.html",
+    "header": "registry/components/header.html",
+    "footer": "registry/components/footer.html"
+  },
+  "styles": {
+    "main.css": "registry/styles/main.css"
+  },
+  "scripts": {
+    "site.js": "registry/scripts/site.js",
+    "mesh.js": "registry/scripts/mesh.js"
+  },
+  "media": {
+    "profile.jpg": {
+      "title": "Portrait",
+      "alt": "Sydney Talcott Portrait"
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "Home",
+      "slug": "index",
+      "template": "landing",
+      "content": {
+        "title": "Sydney Talcott",
+        "heroName": "Sydney Talcott",
+        "heroSubtitle": "Designer by training. Artist by craft. Product leader by mission.",
+        "ctaText": "View Selected Works",
+        "ctaLink": "/work",
+        "aboutTitle": "About",
+        "aboutImage": "/media/profile.jpg",
+        "aboutImageAlt": "Sydney Talcott Portrait",
+        "aboutText": "I build products at the intersection of hardware and software. By combining a deep understanding of spatial design with years of experience leading technical creative teams, I focus on shaping the tools and platforms that empower creators in the spatial computing era. I bridge the gap between creative vision and strategic execution to build the future of immersive technology.",
+        "focusLabel": "Focus",
+        "focus1": "Spatial Experience Design",
+        "focus2": "Product Strategy",
+        "focus3": "Human-Computer Interaction",
+        "focus4": "Creative Tooling",
+        "skillsLabel": "Skills",
+        "skill1": "Spatial Design Systems & OS Logic",
+        "skill2": "AI Implementation",
+        "skill3": "3D Content Creation",
+        "skill4": "Generative AI Strategy & Prompt Design",
+        "experienceTitle": "Experience",
+        "exp1Years": "2022 — Present",
+        "exp1Role": "Principal Product Manager, Strategic Consulting",
+        "exp1Company": "Magic Leap",
+        "exp2Years": "2021 — 2022",
+        "exp2Role": "Senior Product Manager",
+        "exp2Company": "Zillow",
+        "exp3Years": "2017 — 2021",
+        "exp3Role": "Senior Director, Product Management & Visualization",
+        "exp3Company": "CBRE"
+      }
+    },
+    "work": {
+      "title": "Work",
+      "slug": "work",
+      "template": "work",
+      "content": {
+        "title": "Work",
+        "categoryTag": "Selected Systems & Explorations",
+        "intro": "Interactive studies and product prototypes at the intersection of spatial computing, generative geometry, and human-computer interfaces.",
+        "projectTitle": "Interactive 3D Mesh",
+        "tag1": "Spatial Computing",
+        "tag2": "WebGL / Three.js",
+        "tag3": "Generative Geometry",
+        "backLabel": "Back to Overview",
+        "contactCta": "Get In Touch"
+      }
+    }
+  },
+  "streams": {},
+  "navigation": {
+    "primary": [
+      { "label": "about", "url": "/#about" },
+      { "label": "experience", "url": "/#experience" },
+      { "label": "work", "url": "/work" },
+      { "label": "contact", "url": "mailto:sydney.tal@gmail.com" }
+    ]
+  },
+  "settings": {
+    "siteTitle": "Sydney Talcott",
+    "siteUrl": "https://sydneytalcott.com/",
+    "siteGithubRepoLink": "https://github.com/sydneytalcott/sydneytalcott.github.io",
+    "universalTags": {
+      "author": "Sydney Talcott",
+      "contactEmail": "sydney.tal@gmail.com",
+      "linkedinUrl": "https://www.linkedin.com/in/sydneytalcott/",
+      "githubUrl": "https://github.com/sydneytalcott",
+      "location": "Based by the beach • Remote Worldwide"
+    },
+    "deploy": {
+      "target": "github-pages"
+    }
+  }
+}

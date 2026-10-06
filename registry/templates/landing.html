@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  {{component:head}}
+  {{style:main.css}}
+  {{script:site.js}}
+</head>
+<body>
+  <div class="app-container">
+    {{component:header}}
+
+    <main class="hero reveal">
+      <h1 class="hero-title"><b>{{heroName}}</b></h1>
+      <p class="hero-subtitle">{{heroSubtitle}}</p>
+      <div class="cta-container">
+        <a href="{{ctaLink}}" class="btn">{{ctaText}}</a>
+      </div>
+    </main>
+
+    <section id="about" class="about-section reveal">
+      <div class="about-grid">
+        <div class="reveal-left">
+          <div class="image-wrapper">
+            <img src="{{aboutImage}}" alt="{{aboutImageAlt}}" />
+          </div>
+        </div>
+        <div class="about-content reveal-right">
+          <h3 class="section-title-large">{{aboutTitle}}</h3>
+          <p class="section-text">{{aboutText}}</p>
+          <div class="about-meta">
+            <div class="meta-col">
+              <h4>{{focusLabel}}</h4>
+              <ul>
+                <li>{{focus1}}</li>
+                <li>{{focus2}}</li>
+                <li>{{focus3}}</li>
+                <li>{{focus4}}</li>
+              </ul>
+            </div>
+            <div class="meta-col">
+              <h4>{{skillsLabel}}</h4>
+              <ul>
+                <li>{{skill1}}</li>
+                <li>{{skill2}}</li>
+                <li>{{skill3}}</li>
+                <li>{{skill4}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="experience-section reveal">
+      <h3 class="small-title">{{experienceTitle}}</h3>
+      <div class="experience-list">
+        <div class="exp-item">
+          <div class="exp-year">{{exp1Years}}</div>
+          <div class="exp-role">{{exp1Role}}</div>
+          <div class="exp-company">{{exp1Company}}</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-year">{{exp2Years}}</div>
+          <div class="exp-role">{{exp2Role}}</div>
+          <div class="exp-company">{{exp2Company}}</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-year">{{exp3Years}}</div>
+          <div class="exp-role">{{exp3Role}}</div>
+          <div class="exp-company">{{exp3Company}}</div>
+        </div>
+      </div>
+    </section>
+
+    {{component:footer}}
+  </div>
+</body>
+</html>

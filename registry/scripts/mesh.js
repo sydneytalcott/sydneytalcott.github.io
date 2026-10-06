@@ -1,50 +1,7 @@
 // Interactive 3D Mesh Engine for Sydney Talcott Portfolio
-// Built with WebGL / Three.js
+// Built with WebGL / Three.js (loaded from the work template)
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile Menu Toggle
-  const menuToggle = document.getElementById('menuToggle');
-  const menuClose = document.getElementById('menuClose');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileMenuLinks = mobileMenu?.querySelectorAll('a');
-
-  const toggleMenu = (show) => {
-    if (mobileMenu) {
-      if (show) {
-        mobileMenu.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      } else {
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    }
-  };
-
-  menuToggle?.addEventListener('click', () => toggleMenu(true));
-  menuClose?.addEventListener('click', () => toggleMenu(false));
-  mobileMenuLinks?.forEach(link => {
-    link.addEventListener('click', () => toggleMenu(false));
-  });
-
-  // Scroll Reveal
-  const revealCallback = (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  };
-
-  const revealObserver = new IntersectionObserver(revealCallback, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
-    revealObserver.observe(el);
-  });
-
-  // Initialize 3D Mesh
   initInteractiveMesh();
 });
 
