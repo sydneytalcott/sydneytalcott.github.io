@@ -3,79 +3,221 @@
     "landing": {
       "name": "Home Page",
       "fields": [
-        { "name": "title", "label": "Browser Title", "type": "text", "required": true },
-        { "name": "heroName", "label": "Hero Name", "type": "text", "required": true },
-        { "name": "heroSubtitle", "label": "Hero Subtitle", "type": "textarea" },
-        { "name": "ctaText", "label": "CTA Button Text", "type": "text" },
-        { "name": "ctaLink", "label": "CTA Link URL", "type": "text" },
-        { "name": "aboutTitle", "label": "About Heading", "type": "text" },
-        { "name": "aboutImage", "label": "About Portrait", "type": "image", "folder": "media" },
-        { "name": "aboutImageAlt", "label": "Portrait Alt Text", "type": "text" },
-        { "name": "aboutText", "label": "About Text", "type": "textarea" },
-        { "name": "focusLabel", "label": "Focus Column Heading", "type": "text" },
-        { "name": "focus1", "label": "Focus 1", "type": "text" },
-        { "name": "focus2", "label": "Focus 2", "type": "text" },
-        { "name": "focus3", "label": "Focus 3", "type": "text" },
-        { "name": "focus4", "label": "Focus 4", "type": "text" },
-        { "name": "skillsLabel", "label": "Skills Column Heading", "type": "text" },
-        { "name": "skill1", "label": "Skill 1", "type": "text" },
-        { "name": "skill2", "label": "Skill 2", "type": "text" },
-        { "name": "skill3", "label": "Skill 3", "type": "text" },
-        { "name": "skill4", "label": "Skill 4", "type": "text" },
-        { "name": "experienceTitle", "label": "Experience Heading", "type": "text" },
-        { "name": "exp1Years", "label": "Experience 1 Years", "type": "text" },
-        { "name": "exp1Role", "label": "Experience 1 Role", "type": "text" },
-        { "name": "exp1Company", "label": "Experience 1 Company", "type": "text" },
-        { "name": "exp2Years", "label": "Experience 2 Years", "type": "text" },
-        { "name": "exp2Role", "label": "Experience 2 Role", "type": "text" },
-        { "name": "exp2Company", "label": "Experience 2 Company", "type": "text" },
-        { "name": "exp3Years", "label": "Experience 3 Years", "type": "text" },
-        { "name": "exp3Role", "label": "Experience 3 Role", "type": "text" },
-        { "name": "exp3Company", "label": "Experience 3 Company", "type": "text" }
+        {
+          "name": "title",
+          "label": "Browser Title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "heroName",
+          "label": "Hero Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "heroSubtitle",
+          "label": "Hero Subtitle",
+          "type": "textarea"
+        },
+        {
+          "name": "ctaText",
+          "label": "CTA Button Text",
+          "type": "text"
+        },
+        {
+          "name": "ctaLink",
+          "label": "CTA Link URL",
+          "type": "text"
+        },
+        {
+          "name": "aboutTitle",
+          "label": "About Heading",
+          "type": "text"
+        },
+        {
+          "name": "aboutImage",
+          "label": "About Portrait",
+          "type": "image",
+          "folder": "media"
+        },
+        {
+          "name": "aboutImageAlt",
+          "label": "Portrait Alt Text",
+          "type": "text"
+        },
+        {
+          "name": "aboutText",
+          "label": "About Text",
+          "type": "textarea"
+        },
+        {
+          "name": "focusLabel",
+          "label": "Focus Column Heading",
+          "type": "text"
+        },
+        {
+          "name": "focus1",
+          "label": "Focus 1",
+          "type": "text"
+        },
+        {
+          "name": "focus2",
+          "label": "Focus 2",
+          "type": "text"
+        },
+        {
+          "name": "focus3",
+          "label": "Focus 3",
+          "type": "text"
+        },
+        {
+          "name": "focus4",
+          "label": "Focus 4",
+          "type": "text"
+        },
+        {
+          "name": "skillsLabel",
+          "label": "Skills Column Heading",
+          "type": "text"
+        },
+        {
+          "name": "skill1",
+          "label": "Skill 1",
+          "type": "text"
+        },
+        {
+          "name": "skill2",
+          "label": "Skill 2",
+          "type": "text"
+        },
+        {
+          "name": "skill3",
+          "label": "Skill 3",
+          "type": "text"
+        },
+        {
+          "name": "skill4",
+          "label": "Skill 4",
+          "type": "text"
+        },
+        {
+          "name": "experienceTitle",
+          "label": "Experience Heading",
+          "type": "text"
+        },
+        {
+          "name": "exp1Years",
+          "label": "Experience 1 Years",
+          "type": "text"
+        },
+        {
+          "name": "exp1Role",
+          "label": "Experience 1 Role",
+          "type": "text"
+        },
+        {
+          "name": "exp1Company",
+          "label": "Experience 1 Company",
+          "type": "text"
+        },
+        {
+          "name": "exp2Years",
+          "label": "Experience 2 Years",
+          "type": "text"
+        },
+        {
+          "name": "exp2Role",
+          "label": "Experience 2 Role",
+          "type": "text"
+        },
+        {
+          "name": "exp2Company",
+          "label": "Experience 2 Company",
+          "type": "text"
+        },
+        {
+          "name": "exp3Years",
+          "label": "Experience 3 Years",
+          "type": "text"
+        },
+        {
+          "name": "exp3Role",
+          "label": "Experience 3 Role",
+          "type": "text"
+        },
+        {
+          "name": "exp3Company",
+          "label": "Experience 3 Company",
+          "type": "text"
+        }
       ]
     },
     "work": {
       "name": "Work Page",
       "fields": [
-        { "name": "title", "label": "Page Title", "type": "text", "required": true },
-        { "name": "categoryTag", "label": "Category Tag", "type": "text" },
-        { "name": "intro", "label": "Intro", "type": "textarea" },
-        { "name": "projectTitle", "label": "Project Title", "type": "text" },
-        { "name": "tag1", "label": "Tag 1", "type": "text" },
-        { "name": "tag2", "label": "Tag 2", "type": "text" },
-        { "name": "tag3", "label": "Tag 3", "type": "text" },
-        { "name": "backLabel", "label": "Back Link Text", "type": "text" },
-        { "name": "contactCta", "label": "Contact Button Text", "type": "text" }
+        {
+          "name": "title",
+          "label": "Page Title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "categoryTag",
+          "label": "Category Tag",
+          "type": "text"
+        },
+        {
+          "name": "intro",
+          "label": "Intro",
+          "type": "textarea"
+        },
+        {
+          "name": "projectTitle",
+          "label": "Project Title",
+          "type": "text"
+        },
+        {
+          "name": "tag1",
+          "label": "Tag 1",
+          "type": "text"
+        },
+        {
+          "name": "tag2",
+          "label": "Tag 2",
+          "type": "text"
+        },
+        {
+          "name": "tag3",
+          "label": "Tag 3",
+          "type": "text"
+        },
+        {
+          "name": "backLabel",
+          "label": "Back Link Text",
+          "type": "text"
+        },
+        {
+          "name": "contactCta",
+          "label": "Contact Button Text",
+          "type": "text"
+        }
       ]
     }
   },
   "templates": {
-    "landing": { "file": "registry/templates/landing.html", "schema": "landing" },
-    "work": { "file": "registry/templates/work.html", "schema": "work" }
+    "landing": "registry/templates/landing.html",
+    "work": "registry/templates/work.html"
   },
-  "components": {
-    "head": "registry/components/head.html",
-    "header": "registry/components/header.html",
-    "footer": "registry/components/footer.html"
-  },
-  "styles": {
-    "main.css": "registry/styles/main.css"
-  },
-  "scripts": {
-    "site.js": "registry/scripts/site.js",
-    "mesh.js": "registry/scripts/mesh.js"
-  },
-  "media": {
-    "profile.jpg": {
-      "title": "Portrait",
-      "alt": "Sydney Talcott Portrait"
-    }
-  },
+  "streams": {},
   "pages": {
     "home": {
       "title": "Home",
       "slug": "index",
+      "schema": "landing",
       "template": "landing",
+      "publishedAt": "",
+      "updatedAt": "",
       "content": {
         "title": "Sydney Talcott",
         "heroName": "Sydney Talcott",
@@ -111,7 +253,10 @@
     "work": {
       "title": "Work",
       "slug": "work",
+      "schema": "work",
       "template": "work",
+      "publishedAt": "",
+      "updatedAt": "",
       "content": {
         "title": "Work",
         "categoryTag": "Selected Systems & Explorations",
@@ -125,19 +270,30 @@
       }
     }
   },
-  "streams": {},
   "navigation": {
-    "primary": [
-      { "label": "about", "url": "/#about" },
-      { "label": "experience", "url": "/#experience" },
-      { "label": "work", "url": "/work" },
-      { "label": "contact", "url": "mailto:sydney.tal@gmail.com" }
-    ]
+    "primary": {
+      "menu_items": [
+        {
+          "label": "about",
+          "slug": "/#about"
+        },
+        {
+          "label": "experience",
+          "slug": "/#experience"
+        },
+        {
+          "label": "work",
+          "slug": "/work"
+        }
+      ]
+    }
   },
   "settings": {
     "siteTitle": "Sydney Talcott",
-    "siteUrl": "https://sydneytalcott.com/",
+    "siteUrl": "/",
+    "siteLatestCommitMessage": "Convert site to Zazen structure",
     "siteGithubRepoLink": "https://github.com/sydneytalcott/sydneytalcott.github.io",
+    "branch": "main",
     "universalTags": {
       "author": "Sydney Talcott",
       "contactEmail": "sydney.tal@gmail.com",
@@ -145,8 +301,28 @@
       "githubUrl": "https://github.com/sydneytalcott",
       "location": "Based by the beach • Remote Worldwide"
     },
+    "navigation": "primary",
     "deploy": {
-      "target": "github-pages"
+      "target": "github-pages",
+      "baseUrl": ""
+    }
+  },
+  "components": {
+    "head": "registry/components/head.html",
+    "header": "registry/components/header.html",
+    "footer": "registry/components/footer.html"
+  },
+  "styles": {
+    "main.css": "registry/styles/main.css"
+  },
+  "scripts": {
+    "site.js": "registry/scripts/site.js",
+    "mesh.js": "registry/scripts/mesh.js"
+  },
+  "media": {
+    "profile.jpg": {
+      "title": "Portrait",
+      "alt": "Sydney Talcott Portrait"
     }
   }
 }
