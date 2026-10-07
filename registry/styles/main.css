@@ -491,21 +491,15 @@ body {
 
 /* Project Showcase Card */
 .project-card {
-  border: 1px solid var(--border-color);
   background: var(--bg);
   margin-bottom: 100px;
-  transition: border-color 0.3s;
-}
-
-.project-card:hover {
-  border-color: #d0d0d0;
 }
 
 .project-canvas-wrapper {
   position: relative;
   width: 100%;
   height: 540px;
-  background: #0d0e12;
+  background: transparent;
   overflow: hidden;
 }
 
@@ -524,142 +518,6 @@ body {
 
 .three-canvas:active {
   cursor: grabbing;
-}
-
-/* Canvas UI Overlay */
-.canvas-hud {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.hud-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(15, 16, 20, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 6px 12px;
-  color: #f0f0f0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.hud-live-dot {
-  width: 6px;
-  height: 6px;
-  background: #00ff88;
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
-  animation: pulseDot 2s infinite ease-in-out;
-}
-
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
-}
-
-.hud-stats {
-  background: rgba(15, 16, 20, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 6px 12px;
-  color: #a0a0a0;
-  font-size: 11px;
-  font-family: monospace;
-  letter-spacing: 0.05em;
-}
-
-.hud-stats span {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-/* Canvas Bottom Control Bar */
-.canvas-toolbar {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  z-index: 10;
-  pointer-events: auto;
-  flex-wrap: wrap;
-}
-
-.toolbar-group {
-  display: inline-flex;
-  gap: 6px;
-  background: rgba(15, 16, 20, 0.88);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 4px;
-}
-
-.tool-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: #cccccc;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 6px 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--f-sans);
-}
-
-.tool-btn:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.tool-btn.active {
-  background: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
-}
-
-.tool-hint {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  background: rgba(15, 16, 20, 0.88);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 8px 14px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-@media (max-width: 768px) {
-  .tool-hint {
-    display: none;
-  }
-  .canvas-toolbar {
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    justify-content: center;
-  }
-  .tool-btn {
-    padding: 5px 8px;
-    font-size: 10px;
-  }
 }
 
 /* Project Info & Controls */

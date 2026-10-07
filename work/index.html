@@ -60,43 +60,6 @@
       <article class="project-card reveal" id="interactive-3d-mesh">
         <div class="project-canvas-wrapper" id="canvasContainer">
           <canvas id="meshCanvas" class="three-canvas"></canvas>
-
-          <div class="canvas-hud">
-            <div class="hud-badge">
-              <span class="hud-live-dot"></span>
-              <span>Live WebGL Stage</span>
-            </div>
-            <div class="hud-stats">
-              <span>VTX: </span><span id="statsVertices">2,809</span> &bull;
-              <span>FPS: </span><span id="statsFps">60</span>
-            </div>
-          </div>
-
-          <div class="canvas-toolbar">
-            <div class="toolbar-group">
-              <button type="button" class="tool-btn active" data-geo="terrain">Terrain</button>
-              <button type="button" class="tool-btn" data-geo="geosphere">Geosphere</button>
-              <button type="button" class="tool-btn" data-geo="torusknot">Torus Knot</button>
-              <button type="button" class="tool-btn" data-geo="waveplane">Ribbon</button>
-            </div>
-
-            <div class="toolbar-group">
-              <button type="button" class="tool-btn active" data-mode="dual">Dual Mesh</button>
-              <button type="button" class="tool-btn" data-mode="wireframe">Wireframe</button>
-              <button type="button" class="tool-btn" data-mode="solid">Solid</button>
-              <button type="button" class="tool-btn" data-mode="points">Points</button>
-            </div>
-
-            <div class="toolbar-group">
-              <button type="button" class="tool-btn active" id="btnRotate">Auto-Rotate</button>
-              <button type="button" class="tool-btn" id="btnReset">Reset Camera</button>
-            </div>
-
-            <div class="tool-hint">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              <span>Drag to rotate &bull; Hover for ripple</span>
-            </div>
-          </div>
         </div>
 
         <div class="project-content">

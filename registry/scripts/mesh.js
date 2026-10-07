@@ -8,14 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 function initInteractiveMesh() {
   const container = document.getElementById('canvasContainer');
   const canvas = document.getElementById('meshCanvas');
-  const statsVtx = document.getElementById('statsVertices');
-  const statsFps = document.getElementById('statsFps');
-  
+
   if (!container || !canvas || typeof THREE === 'undefined') return;
 
   // Scene setup
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0d0e12, 0.025);
 
   // Camera setup
   const camera = new THREE.PerspectiveCamera(
@@ -24,8 +21,8 @@ function initInteractiveMesh() {
     0.1,
     100
   );
-  camera.position.set(0, 7, 13);
-  camera.lookAt(0, 0, 0);
+  camera.position.set(0, 8, 18);
+  camera.lookAt(0, -2.5, 0);
 
   // Renderer setup
   const renderer = new THREE.WebGLRenderer({
@@ -36,7 +33,7 @@ function initInteractiveMesh() {
   });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x0d0e12, 1);
+  renderer.setClearColor(0x000000, 0);
 
   // Lighting
   const ambientLight = new THREE.AmbientLight(0x2a2e3d, 1.2);
@@ -74,9 +71,7 @@ function initInteractiveMesh() {
     prevMouseY: 0,
     pointerRayX: 0,
     pointerRayY: 0,
-    lastTime: performance.now(),
-    frameCount: 0,
-    fpsTimer: performance.now()
+    lastTime: performance.now()
   };
 
   // Mesh objects container
@@ -124,31 +119,21 @@ function initInteractiveMesh() {
     basePositions.set(posAttr.array);
     vertexCount = posAttr.count;
 
-    if (statsVtx) {
-      statsVtx.textContent = vertexCount.toLocaleString();
-    }
-
     // Materials
-    const solidMaterial = new THREE.MeshStandardMaterial({
-      color: 0x12141a,
-      roughness: 0.35,
-      metalness: 0.7,
-      flatShading: true,
+    // Flat white fill matches the page so the black wireframe reads as floating line work
+    const solidMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
       side: THREE.DoubleSide
     });
 
     const wireMaterial = new THREE.MeshBasicMaterial({
-      color: 0xe0e6ed,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.65
+      color: 0x000000,
+      wireframe: true
     });
 
     const pointsMaterial = new THREE.PointsMaterial({
-      color: 0xffffff,
-      size: 0.08,
-      transparent: true,
-      opacity: 0.85
+      color: 0x000000,
+      size: 0.08
     });
 
     // Create representations based on render mode
@@ -176,41 +161,6 @@ function initInteractiveMesh() {
 
   // Initial build
   buildGeometry(state.geometryType);
-
-  // Interactive UI Bindings
-  const geoButtons = document.querySelectorAll('[data-geo]');
-  geoButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      geoButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.geometryType = btn.getAttribute('data-geo');
-      buildGeometry(state.geometryType);
-    });
-  });
-
-  const modeButtons = document.querySelectorAll('[data-mode]');
-  modeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      modeButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.renderMode = btn.getAttribute('data-mode');
-      updateVisibility();
-    });
-  });
-
-  const btnReset = document.getElementById('btnReset');
-  btnReset?.addEventListener('click', () => {
-    state.targetRotationX = 0.35;
-    state.targetRotationY = 0;
-    camera.position.set(0, 7, 13);
-    camera.lookAt(0, 0, 0);
-  });
-
-  const btnRotate = document.getElementById('btnRotate');
-  btnRotate?.addEventListener('click', () => {
-    state.autoRotate = !state.autoRotate;
-    btnRotate.classList.toggle('active', state.autoRotate);
-  });
 
   // Mouse & Touch Controls
   canvas.addEventListener('mousedown', (e) => {
@@ -294,15 +244,6 @@ function initInteractiveMesh() {
     const delta = (now - state.lastTime) * 0.001;
     state.lastTime = now;
     clock += delta * state.speed;
-
-    // FPS counter calculation
-    state.frameCount++;
-    if (now - state.fpsTimer >= 500) {
-      const currentFps = Math.round((state.frameCount * 1000) / (now - state.fpsTimer));
-      if (statsFps) statsFps.textContent = currentFps;
-      state.frameCount = 0;
-      state.fpsTimer = now;
-    }
 
     // Auto-rotation & smooth damping
     if (state.autoRotate && !state.isDragging) {
