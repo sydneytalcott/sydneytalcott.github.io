@@ -12,40 +12,101 @@
   {{script:mesh.js}}
 </head>
 <body>
-  <div class="app-container">
+  <!-- Feature flag: set universalTags.caseStudies to "on" in zazen.json to show the case studies section -->
+  <div class="app-container case-studies-{{caseStudies}}">
     {{component:header}}
 
     <header class="work-header reveal">
-      <div class="work-header-top">
-        <h1 class="page-title">{{title}}</h1>
-        <span class="page-category-tag">{{categoryTag}}</span>
-      </div>
+      <h1 class="page-title">{{title}}</h1>
       <p class="work-header-subtitle">{{intro}}</p>
     </header>
 
     <main>
-      <article class="project-card reveal" id="interactive-3d-mesh">
-        <div class="project-canvas-wrapper" id="canvasContainer">
-          <canvas id="meshCanvas" class="three-canvas"></canvas>
-        </div>
-
-        <div class="project-content">
-          <div class="project-meta-row">
-            <div>
-              <h2 class="project-headline">{{projectTitle}}</h2>
+      <section class="section reveal flag-case-studies" id="case-studies" data-nosnippet>
+        <h2 class="section-label">{{caseStudiesTitle}}</h2>
+        <div class="section-body">
+          <article class="case-study" id="case-study-1">
+            <div class="case-media">Project image</div>
+            <div class="case-body">
+              <div class="case-meta">{{cs1Meta}}</div>
+              <h3 class="case-title">{{cs1Title}}</h3>
+              <dl class="case-facts">
+                <div><dt>Problem</dt><dd>{{cs1Problem}}</dd></div>
+                <div><dt>My role</dt><dd>{{cs1Role}}</dd></div>
+                <div><dt>Decisions</dt><dd>{{cs1Decisions}}</dd></div>
+                <div><dt>Result</dt><dd>{{cs1Result}}</dd></div>
+              </dl>
             </div>
-          </div>
-
-          <div class="work-footer-nav">
-            <a href="{{siteUrl || '/'}}" class="back-home-link">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-              <span>{{backLabel}}</span>
-            </a>
-            <a href="mailto:{{contactEmail}}" class="btn">{{contactCta}}</a>
-          </div>
+          </article>
+          <article class="case-study" id="case-study-2">
+            <div class="case-media">Project image</div>
+            <div class="case-body">
+              <div class="case-meta">{{cs2Meta}}</div>
+              <h3 class="case-title">{{cs2Title}}</h3>
+              <dl class="case-facts">
+                <div><dt>Problem</dt><dd>{{cs2Problem}}</dd></div>
+                <div><dt>My role</dt><dd>{{cs2Role}}</dd></div>
+                <div><dt>Decisions</dt><dd>{{cs2Decisions}}</dd></div>
+                <div><dt>Result</dt><dd>{{cs2Result}}</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="case-study" id="case-study-3">
+            <div class="case-media">Project image</div>
+            <div class="case-body">
+              <div class="case-meta">{{cs3Meta}}</div>
+              <h3 class="case-title">{{cs3Title}}</h3>
+              <dl class="case-facts">
+                <div><dt>Problem</dt><dd>{{cs3Problem}}</dd></div>
+                <div><dt>My role</dt><dd>{{cs3Role}}</dd></div>
+                <div><dt>Decisions</dt><dd>{{cs3Decisions}}</dd></div>
+                <div><dt>Result</dt><dd>{{cs3Result}}</dd></div>
+              </dl>
+            </div>
+          </article>
         </div>
-      </article>
+      </section>
+
+      <section class="section reveal" id="interactive-3d-mesh">
+        <h2 class="section-label">{{explorationsTitle}}</h2>
+        <div class="section-body">
+          <h3 class="project-headline">{{projectTitle}}</h3>
+          <p class="project-desc">{{projectIntro}}</p>
+          <figure class="mesh-stage">
+            <div class="mesh-stage-bar">
+              <span class="mesh-stage-title">Live WebGL stage</span>
+              <span class="mesh-readout"><span id="meshVertexCount">0</span> vertices · <span id="meshFps">0</span> fps</span>
+            </div>
+            <div class="project-canvas-wrapper" id="canvasContainer" data-fit="0.8">
+              <canvas id="meshCanvas" class="three-canvas" aria-label="Interactive wireframe mesh"></canvas>
+            </div>
+            <div class="mesh-controls">
+              <div class="mesh-group" role="group" aria-label="Shape">
+              <button type="button" class="mesh-btn" data-mesh-shape="terrain" aria-pressed="true">Terrain</button>
+              <button type="button" class="mesh-btn" data-mesh-shape="geosphere" aria-pressed="false">Geosphere</button>
+              <button type="button" class="mesh-btn" data-mesh-shape="torusknot" aria-pressed="false">Torus knot</button>
+              <button type="button" class="mesh-btn" data-mesh-shape="waveplane" aria-pressed="false">Ribbon</button>
+              </div>
+              <div class="mesh-group" role="group" aria-label="Render mode">
+              <button type="button" class="mesh-btn" data-mesh-mode="dual" aria-pressed="true">Dual mesh</button>
+              <button type="button" class="mesh-btn" data-mesh-mode="wireframe" aria-pressed="false">Wireframe</button>
+              <button type="button" class="mesh-btn" data-mesh-mode="solid" aria-pressed="false">Solid</button>
+              <button type="button" class="mesh-btn" data-mesh-mode="points" aria-pressed="false">Points</button>
+              </div>
+            </div>
+            <figcaption class="mesh-caption">
+              <span>Drag to rotate · hover for ripple</span>
+              <span class="mesh-actions">
+                <button type="button" class="mesh-link" id="meshAutoRotate" aria-pressed="true">Auto-rotate</button>
+                <button type="button" class="mesh-link" id="meshReset">Reset camera</button>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
     </main>
+
+    {{component:contact}}
 
     {{component:footer}}
   </div>

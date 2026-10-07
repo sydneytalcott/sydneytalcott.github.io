@@ -6,74 +6,123 @@
   <title>{{title}}</title>
   {{component:head}}
   {{style:main.css}}
+  <!-- Three.js for 3D Mesh Rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   {{script:site.js}}
+  {{script:mesh.js}}
 </head>
 <body>
-  <div class="app-container">
+  <!-- Feature flag: set universalTags.caseStudies to "on" in zazen.json to show case study links -->
+  <div class="app-container case-studies-{{caseStudies}}">
     {{component:header}}
 
     <main class="hero reveal">
-      <h1 class="hero-title"><b>{{heroName}}</b></h1>
-      <p class="hero-subtitle">{{heroSubtitle}}</p>
-      <div class="cta-container">
-        <a href="{{ctaLink}}" class="btn">{{ctaText}}</a>
+      <div class="hero-copy">
+        <p class="hero-eyebrow">{{heroEyebrow}}</p>
+        <h1 class="hero-title">{{heroHeadline}}</h1>
+        <p class="hero-subtitle">{{heroSubtitle}}</p>
+        <div class="cta-container">
+          <a href="{{ctaLink}}" class="btn btn-primary">{{ctaText}}</a>
+          <a href="{{cta2Link}}" class="btn">{{cta2Text}}</a>
+        </div>
+      </div>
+      <div class="hero-mesh" id="canvasContainer" data-wheel-zoom="false" data-fit="0.8" aria-hidden="true">
+        <canvas id="meshCanvas" class="three-canvas"></canvas>
       </div>
     </main>
 
-    <section id="about" class="about-section reveal">
-      <div class="about-grid">
-        <div class="reveal-left">
+    <section id="about" class="section reveal">
+      <h2 class="section-label">{{aboutTitle}}</h2>
+      <div class="section-body">
+        <div class="about-intro">
           <div class="image-wrapper">
             <img src="{{aboutImage}}" alt="{{aboutImageAlt}}" />
           </div>
+          <div class="about-content">
+            <p class="about-lead">{{aboutLead}}</p>
+            <p class="section-text">{{aboutText}}</p>
+          </div>
         </div>
-        <div class="about-content reveal-right">
-          <h3 class="section-title-large">{{aboutTitle}}</h3>
-          <p class="section-text">{{aboutText}}</p>
-          <div class="about-meta">
-            <div class="meta-col">
-              <h4>{{focusLabel}}</h4>
-              <ul>
-                <li>{{focus1}}</li>
-                <li>{{focus2}}</li>
-                <li>{{focus3}}</li>
-                <li>{{focus4}}</li>
-              </ul>
-            </div>
-            <div class="meta-col">
-              <h4>{{skillsLabel}}</h4>
-              <ul>
-                <li>{{skill1}}</li>
-                <li>{{skill2}}</li>
-                <li>{{skill3}}</li>
-                <li>{{skill4}}</li>
-              </ul>
-            </div>
+        <div class="about-meta">
+          <div class="meta-col">
+            <h3>{{focusLabel}}</h3>
+            <ul>
+              <li>{{focus1}}</li>
+              <li>{{focus2}}</li>
+              <li>{{focus3}}</li>
+              <li>{{focus4}}</li>
+            </ul>
+          </div>
+          <div class="meta-col">
+            <h3>{{skillsLabel}}</h3>
+            <ul>
+              <li>{{skill1}}</li>
+              <li>{{skill2}}</li>
+              <li>{{skill3}}</li>
+              <li>{{skill4}}</li>
+            </ul>
+          </div>
+          <div class="meta-col">
+            <h3>{{lookingLabel}}</h3>
+            <p>{{lookingText}}</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="experience" class="experience-section reveal">
-      <h3 class="small-title">{{experienceTitle}}</h3>
-      <div class="experience-list">
+    <section id="experience" class="section reveal">
+      <h2 class="section-label">{{experienceTitle}}</h2>
+      <div class="section-body experience-list">
         <div class="exp-item">
           <div class="exp-year">{{exp1Years}}</div>
-          <div class="exp-role">{{exp1Role}}</div>
-          <div class="exp-company">{{exp1Company}}</div>
+          <div class="exp-body">
+            <div class="exp-role">{{exp1Role}}</div>
+            <div class="exp-company">{{exp1Company}}</div>
+            <ul class="exp-points">
+              <li>{{exp1Point1}}</li>
+              <li>{{exp1Point2}}</li>
+              <li>{{exp1Point3}}</li>
+            </ul>
+          </div>
+          <a href="/work#case-study-1" class="exp-link flag-case-studies" data-nosnippet>{{caseStudyLinkText}}</a>
         </div>
         <div class="exp-item">
           <div class="exp-year">{{exp2Years}}</div>
-          <div class="exp-role">{{exp2Role}}</div>
-          <div class="exp-company">{{exp2Company}}</div>
+          <div class="exp-body">
+            <div class="exp-role">{{exp2Role}}</div>
+            <div class="exp-company">{{exp2Company}}</div>
+            <ul class="exp-points">
+              <li>{{exp2Point1}}</li>
+              <li>{{exp2Point2}}</li>
+              <li>{{exp2Point3}}</li>
+            </ul>
+          </div>
+          <a href="/work#case-study-2" class="exp-link flag-case-studies" data-nosnippet>{{caseStudyLinkText}}</a>
         </div>
         <div class="exp-item">
           <div class="exp-year">{{exp3Years}}</div>
-          <div class="exp-role">{{exp3Role}}</div>
-          <div class="exp-company">{{exp3Company}}</div>
+          <div class="exp-body">
+            <div class="exp-role">{{exp3Role}}</div>
+            <div class="exp-company">{{exp3Company}}</div>
+            <ul class="exp-points">
+              <li>{{exp3Point1}}</li>
+              <li>{{exp3Point2}}</li>
+              <li>{{exp3Point3}}</li>
+            </ul>
+          </div>
+          <a href="/work#case-study-3" class="exp-link flag-case-studies" data-nosnippet>{{caseStudyLinkText}}</a>
+        </div>
+        <div class="exp-item">
+          <div class="exp-year">{{earlierYears}}</div>
+          <div class="exp-body">
+            <div class="exp-role">{{earlierRole}}</div>
+            <p class="exp-earlier">{{earlierText}}</p>
+          </div>
         </div>
       </div>
     </section>
+
+    {{component:contact}}
 
     {{component:footer}}
   </div>

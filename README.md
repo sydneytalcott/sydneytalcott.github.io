@@ -24,4 +24,7 @@ This repository is a [Zazen](https://zazen.dev) site for [sydneytalcott.com](htt
 - `{{siteGithubRepoLink}}`
 
 ## Custom Universal Tags
-- `{{author}}`, `{{contactEmail}}`, `{{linkedinUrl}}`, `{{githubUrl}}`, `{{location}}`
+- `{{author}}`, `{{contactEmail}}`, `{{linkedinUrl}}`, `{{githubUrl}}`, `{{location}}`, `{{caseStudies}}`
+
+## Feature Flags
+- `caseStudies` (in `zazen.json` under `settings.universalTags`): `"off"` hides the case study links on the home page and the Case studies section on the work page; set it to `"on"` and regenerate the pages to show them. The flagged markup carries the `flag-case-studies` class and is hidden by `.case-studies-off` in `registry/styles/main.css`.
