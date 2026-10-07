@@ -228,7 +228,7 @@ body {
 .hero-mesh {
   flex: 1 1 480px;
   min-width: 0;
-  height: 460px;
+  height: 580px;
 }
 
 .cta-container {
@@ -268,7 +268,7 @@ body {
     padding: 24px 0 48px;
   }
   .hero-mesh {
-    height: 320px;
+    height: 400px;
   }
 }
 
