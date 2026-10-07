@@ -575,6 +575,11 @@ body {
 }
 
 /* Explorations: 2x2 mesh grid */
+/* Span the full content width (below the label) so the grid is centered on the page */
+#interactive-3d-mesh .section-body {
+  flex-basis: 100%;
+}
+
 .mesh-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
