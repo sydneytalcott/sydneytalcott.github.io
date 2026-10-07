@@ -2,14 +2,15 @@
 // Line color follows the canvas's CSS `color`. Tune SPEED, COLS and ROWS below.
 document.addEventListener('DOMContentLoaded', () => {
   const SPEED = 1;
-  const W = 680, H = 230, TOP = 158; // drawing units; TOP crops the empty sky above the crest
+  const W = 680, H = 150, TOP = 158; // drawing units; TOP crops the empty sky above the crest
+  const NEAR = 0.22; // where the mesh starts in front of the crest (0 = full-depth base, higher = shorter base)
 
   document.querySelectorAll('canvas.mesh-wave').forEach((c) => {
     const g = c.getContext && c.getContext('2d');
     if (!g) return;
 
     const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let COLS = 170, ROWS = 78, thick = 1;
+    let COLS = 170, ROWS = 61, thick = 1;
     let px = new Float32Array(0), py = new Float32Array(0);
     let visible = true, running = false;
 
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Coarser mesh and proportionally heavier lines on narrow screens so it stays legible
       const narrow = w < 600;
       COLS = narrow ? 96 : 170;
-      ROWS = narrow ? 52 : 78;
+      ROWS = narrow ? 41 : 61;
       thick = Math.max(1, 0.75 / (w / W));
       px = new Float32Array(COLS * ROWS);
       py = new Float32Array(COLS * ROWS);
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       g.lineJoin = 'round';
       let i, j, k;
       for (j = 0; j < ROWS; j++) {
-        const y = j / (ROWS - 1);
+        const y = NEAR + (1 - NEAR) * j / (ROWS - 1);
         for (i = 0; i < COLS; i++) {
           const x = (i / (COLS - 1) * 2 - 1) * 2.3;
           const h = height(x, y, t);
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       for (j = 0; j < ROWS; j++) {
-        const a = 1 - j / (ROWS - 1);
+        const a = (1 - NEAR) * (1 - j / (ROWS - 1));
         g.globalAlpha = 0.28 + 0.62 * a;
         g.lineWidth = (0.35 + 0.45 * a) * thick;
         g.beginPath();
