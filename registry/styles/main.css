@@ -574,62 +574,26 @@ body {
   color: var(--text-body);
 }
 
-/* Explorations: mesh stage */
-.project-headline {
-  font-family: var(--f-serif);
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 1.2;
+/* Explorations: 2x2 mesh grid */
+.mesh-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
 }
 
-.project-desc {
-  color: var(--text-body);
-  max-width: 640px;
-  margin: 8px 0 20px;
-}
-
-.mesh-stage {
-  border: 1px solid var(--border-color);
-}
-
-.mesh-stage-bar,
-.mesh-controls,
-.mesh-caption {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px 24px;
-  padding: 12px 16px;
-}
-
-.mesh-stage-bar {
-  border-bottom: 1px solid var(--border-color);
-  font-size: 13px;
-}
-
-.mesh-stage-title {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.mesh-readout {
-  color: var(--text-secondary);
-  font-variant-numeric: tabular-nums;
-}
-
-.project-canvas-wrapper {
+.mesh-tile {
   position: relative;
   width: 100%;
-  height: 560px;
+  height: 360px;
   overflow: hidden;
 }
 
 @media (max-width: 768px) {
-  .project-canvas-wrapper {
-    height: 360px;
+  .mesh-grid {
+    gap: 8px;
+  }
+  .mesh-tile {
+    height: 200px;
   }
 }
 
@@ -645,67 +609,6 @@ body {
   cursor: grabbing;
 }
 
-.mesh-controls {
-  border-top: 1px solid var(--border-color);
-}
-
-.mesh-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.mesh-btn {
-  min-height: 44px;
-  padding: 0 16px;
-  font: inherit;
-  font-size: 14px;
-  color: var(--text-primary);
-  background: var(--bg);
-  border: 1px solid #b8b8b8;
-  cursor: pointer;
-}
-
-.mesh-btn[aria-pressed="true"] {
-  font-weight: 600;
-  color: var(--bg);
-  background: var(--accent);
-  border-color: var(--accent);
-}
-
-.mesh-caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-  border-top: 1px solid var(--border-color);
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.mesh-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 20px;
-}
-
-.mesh-link {
-  min-height: 44px;
-  padding: 0;
-  font: inherit;
-  font-weight: 600;
-  color: var(--text-primary);
-  background: none;
-  border: 0;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.mesh-link[aria-pressed="false"] {
-  font-weight: 400;
-  color: var(--text-secondary);
-}
-
-.mesh-btn:focus-visible,
-.mesh-link:focus-visible,
 .btn:focus-visible,
 a:focus-visible {
   outline: 2px solid var(--accent);

@@ -109,38 +109,20 @@
       <section class="section reveal" id="interactive-3d-mesh">
         <h2 class="section-label">Explorations</h2>
         <div class="section-body">
-          <h3 class="project-headline">Interactive 3D mesh</h3>
-          <p class="project-desc">A generative geometry study in WebGL and Three.js.</p>
-          <figure class="mesh-stage">
-            <div class="mesh-stage-bar">
-              <span class="mesh-stage-title">Live WebGL stage</span>
-              <span class="mesh-readout"><span id="meshVertexCount">0</span> vertices · <span id="meshFps">0</span> fps</span>
+          <div class="mesh-grid">
+            <div class="mesh-tile" data-mesh data-shape="terrain" data-wheel-zoom="false" data-fit="0.8" aria-hidden="true">
+              <canvas class="three-canvas"></canvas>
             </div>
-            <div class="project-canvas-wrapper" id="canvasContainer" data-fit="0.8">
-              <canvas id="meshCanvas" class="three-canvas" aria-label="Interactive wireframe mesh"></canvas>
+            <div class="mesh-tile" data-mesh data-shape="geosphere" data-wheel-zoom="false" data-fit="0.8" aria-hidden="true">
+              <canvas class="three-canvas"></canvas>
             </div>
-            <div class="mesh-controls">
-              <div class="mesh-group" role="group" aria-label="Shape">
-              <button type="button" class="mesh-btn" data-mesh-shape="terrain" aria-pressed="true">Terrain</button>
-              <button type="button" class="mesh-btn" data-mesh-shape="geosphere" aria-pressed="false">Geosphere</button>
-              <button type="button" class="mesh-btn" data-mesh-shape="torusknot" aria-pressed="false">Torus knot</button>
-              <button type="button" class="mesh-btn" data-mesh-shape="waveplane" aria-pressed="false">Ribbon</button>
-              </div>
-              <div class="mesh-group" role="group" aria-label="Render mode">
-              <button type="button" class="mesh-btn" data-mesh-mode="dual" aria-pressed="true">Dual mesh</button>
-              <button type="button" class="mesh-btn" data-mesh-mode="wireframe" aria-pressed="false">Wireframe</button>
-              <button type="button" class="mesh-btn" data-mesh-mode="solid" aria-pressed="false">Solid</button>
-              <button type="button" class="mesh-btn" data-mesh-mode="points" aria-pressed="false">Points</button>
-              </div>
+            <div class="mesh-tile" data-mesh data-shape="torusknot" data-wheel-zoom="false" data-fit="0.8" aria-hidden="true">
+              <canvas class="three-canvas"></canvas>
             </div>
-            <figcaption class="mesh-caption">
-              <span>Drag to rotate · hover for ripple</span>
-              <span class="mesh-actions">
-                <button type="button" class="mesh-link" id="meshAutoRotate" aria-pressed="true">Auto-rotate</button>
-                <button type="button" class="mesh-link" id="meshReset">Reset camera</button>
-              </span>
-            </figcaption>
-          </figure>
+            <div class="mesh-tile" data-mesh data-shape="waveplane" data-wheel-zoom="false" data-fit="0.8" aria-hidden="true">
+              <canvas class="three-canvas"></canvas>
+            </div>
+          </div>
         </div>
       </section>
     </main>
