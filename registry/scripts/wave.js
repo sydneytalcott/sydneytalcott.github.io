@@ -3,8 +3,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const SPEED = 1;
   const STYLE = 'dots'; // 'dots' = a dot at each mesh vertex, 'lines' = wireframe
-  const W = 680, H = 84, TOP = 143; // drawing units; TOP crops the empty sky above the crest (sized for AMP = 1.4)
-  const SQUASH = 0.5; // vertical compression of the whole wave (1 = original proportions); H is the visible span times SQUASH
+  const W = 680, H = 75, TOP = 143; // drawing units; TOP crops the empty sky above the crest (sized for AMP = 1.4)
+  const SQUASH = 75 / 168; // vertical compression of the whole wave (1 = original proportions); H is the visible span times SQUASH
   const AMP = 1.4; // wave height multiplier (1 = original)
   const NEAR = 0.22; // where the mesh starts in front of the crest (0 = full-depth base, higher = shorter base)
 
