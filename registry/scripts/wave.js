@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Coarser mesh and proportionally heavier lines on narrow screens so it stays legible
       const narrow = w < 600;
       COLS = narrow ? 96 : 170;
+      if (STYLE === 'dots') COLS = narrow ? 150 : 300; // denser across, to balance the closely spaced rows
       ROWS = narrow ? 41 : 61;
       thick = Math.max(1, 0.75 / (w / W));
       px = new Float32Array(COLS * ROWS);
@@ -48,8 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
       let i, j, k;
       for (j = 0; j < ROWS; j++) {
         const y = NEAR + (1 - NEAR) * j / (ROWS - 1);
+        const stagger = STYLE === 'dots' && j % 2 ? 0.5 : 0; // offset alternate rows so dots don't line up into streaks
         for (i = 0; i < COLS; i++) {
-          const x = (i / (COLS - 1) * 2 - 1) * 2.3;
+          const x = ((i + stagger) / (COLS - 1) * 2 - 1) * 2.3;
           const h = height(x, y, t);
           const s = 1 / (1 + (y - h * 0.14) * 1.5);
           k = j * COLS + i;
@@ -60,10 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (STYLE === 'dots') {
         // One dot per mesh vertex; nearer rows get larger, darker dots
         g.fillStyle = g.strokeStyle;
-        // Every other row: the wave is squashed vertically, so full rows would run together
-        for (j = 0; j < ROWS; j += 2) {
+        for (j = 0; j < ROWS; j++) {
           const a = (1 - NEAR) * (1 - j / (ROWS - 1));
-          const r = (0.42 + 0.4 * a) * thick;
+          const r = (0.3 + 0.3 * a) * thick;
           g.globalAlpha = 0.4 + 0.6 * a;
           g.beginPath();
           for (i = 0; i < COLS; i++) { k = j * COLS + i; g.moveTo(px[k] + r, py[k]); g.arc(px[k], py[k], r, 0, 6.2832); }
