@@ -449,7 +449,7 @@ body {
 .mesh-wave {
   display: block;
   width: 100%;
-  aspect-ratio: 680 / 150;
+  aspect-ratio: 680 / 75;
   color: var(--text-primary);
 }
 
