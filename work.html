@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Work — Sydney Talcott</title>
-  <link rel="icon" type="image/png" href="/favicon.png">
+  <meta name="description" content="Product work and explorations in spatial computing and generative geometry by Sydney Talcott.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sydney Talcott">
+<meta property="og:description" content="Product work and explorations in spatial computing and generative geometry by Sydney Talcott.">
+<link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYCRMTSE0B"></script>
 <script>
@@ -24,12 +28,13 @@
   <script src="/registry/scripts/mesh.js"></script>
 </head>
 <body>
-  <div class="app-container">
+  <!-- Feature flag: set universalTags.caseStudies to "on" in zazen.json to show the case studies section -->
+  <div class="app-container case-studies-off">
     <nav class="main-nav">
   <a href="/" class="nav-brand" aria-label="Sydney Talcott — Home">Sydney Talcott</a>
   <ul class="nav-links desktop-only">
-    <li class="nav-item"><a href="/#about" class="nav-link">about</a></li><li class="nav-item"><a href="/#experience" class="nav-link">experience</a></li><li class="nav-item"><a href="/work" class="nav-link active">work</a></li>
-    <li class="nav-item"><a href="mailto:sydney.tal@gmail.com" class="nav-link">contact</a></li>
+    <li class="nav-item"><a href="/work" class="nav-link active">Work</a></li><li class="nav-item"><a href="/#about" class="nav-link">About</a></li><li class="nav-item"><a href="/#experience" class="nav-link">Experience</a></li>
+    <li class="nav-item"><a href="/#contact" class="nav-link">Contact</a></li>
   </ul>
 
   <button class="menu-toggle mobile-only" id="menuToggle" aria-label="Open menu">
@@ -42,51 +47,117 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
   </button>
   <ul class="mobile-links">
-    <li class="nav-item"><a href="/#about" class="nav-link">about</a></li><li class="nav-item"><a href="/#experience" class="nav-link">experience</a></li><li class="nav-item"><a href="/work" class="nav-link active">work</a></li>
-    <li class="nav-item"><a href="mailto:sydney.tal@gmail.com" class="nav-link">contact</a></li>
+    <li class="nav-item"><a href="/work" class="nav-link active">Work</a></li><li class="nav-item"><a href="/#about" class="nav-link">About</a></li><li class="nav-item"><a href="/#experience" class="nav-link">Experience</a></li>
+    <li class="nav-item"><a href="/#contact" class="nav-link">Contact</a></li>
   </ul>
 </div>
 
 
     <header class="work-header reveal">
-      <div class="work-header-top">
-        <h1 class="page-title">Work</h1>
-        <span class="page-category-tag">Selected Systems & Explorations</span>
-      </div>
-      <p class="work-header-subtitle">Interactive studies and product prototypes at the intersection of spatial computing, generative geometry, and human-computer interfaces.</p>
+      <h1 class="page-title">Work</h1>
+      <p class="work-header-subtitle">Product work and explorations in spatial computing and generative geometry.</p>
     </header>
 
     <main>
-      <article class="project-card reveal" id="interactive-3d-mesh">
-        <div class="project-canvas-wrapper" id="canvasContainer">
-          <canvas id="meshCanvas" class="three-canvas"></canvas>
-        </div>
-
-        <div class="project-content">
-          <div class="project-meta-row">
-            <div>
-              <h2 class="project-headline">Interactive 3D Mesh</h2>
+      <section class="section reveal flag-case-studies" id="case-studies" data-nosnippet>
+        <h2 class="section-label">Case studies</h2>
+        <div class="section-body">
+          <article class="case-study" id="case-study-1">
+            <div class="case-media">Project image</div>
+            <div class="case-body">
+              <div class="case-meta">Magic Leap · Principal Product Manager · 2022–Present</div>
+              <h3 class="case-title">[Case study title]</h3>
+              <dl class="case-facts">
+                <div><dt>Problem</dt><dd>[Who had it and why it mattered.]</dd></div>
+                <div><dt>My role</dt><dd>[What you owned, team size.]</dd></div>
+                <div><dt>Decisions</dt><dd>[The key trade-off you made.]</dd></div>
+                <div><dt>Result</dt><dd>[Measured outcome.]</dd></div>
+              </dl>
             </div>
-          </div>
-
-          <div class="work-footer-nav">
-            <a href="/" class="back-home-link">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-              <span>Back to Overview</span>
-            </a>
-            <a href="mailto:sydney.tal@gmail.com" class="btn">Get In Touch</a>
-          </div>
+          </article>
+          <article class="case-study" id="case-study-2">
+            <div class="case-media">Project image</div>
+            <div class="case-body">
+              <div class="case-meta">Zillow · Senior Product Manager · 2021–2022</div>
+              <h3 class="case-title">[Case study title]</h3>
+              <dl class="case-facts">
+                <div><dt>Problem</dt><dd>[Who had it and why it mattered.]</dd></div>
+                <div><dt>My role</dt><dd>[What you owned, team size.]</dd></div>
+                <div><dt>Decisions</dt><dd>[The key trade-off you made.]</dd></div>
+                <div><dt>Result</dt><dd>[Measured outcome.]</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="case-study" id="case-study-3">
+            <div class="case-media">Project image</div>
+            <div class="case-body">
+              <div class="case-meta">CBRE · Senior Director, Product & Visualization · 2017–2021</div>
+              <h3 class="case-title">[Case study title]</h3>
+              <dl class="case-facts">
+                <div><dt>Problem</dt><dd>[Who had it and why it mattered.]</dd></div>
+                <div><dt>My role</dt><dd>[What you owned, team size.]</dd></div>
+                <div><dt>Decisions</dt><dd>[The key trade-off you made.]</dd></div>
+                <div><dt>Result</dt><dd>[Measured outcome.]</dd></div>
+              </dl>
+            </div>
+          </article>
         </div>
-      </article>
+      </section>
+
+      <section class="section reveal" id="interactive-3d-mesh">
+        <h2 class="section-label">Explorations</h2>
+        <div class="section-body">
+          <h3 class="project-headline">Interactive 3D mesh</h3>
+          <p class="project-desc">A generative geometry study in WebGL and Three.js.</p>
+          <figure class="mesh-stage">
+            <div class="mesh-stage-bar">
+              <span class="mesh-stage-title">Live WebGL stage</span>
+              <span class="mesh-readout"><span id="meshVertexCount">0</span> vertices · <span id="meshFps">0</span> fps</span>
+            </div>
+            <div class="project-canvas-wrapper" id="canvasContainer" data-fit="0.8">
+              <canvas id="meshCanvas" class="three-canvas" aria-label="Interactive wireframe mesh"></canvas>
+            </div>
+            <div class="mesh-controls">
+              <div class="mesh-group" role="group" aria-label="Shape">
+              <button type="button" class="mesh-btn" data-mesh-shape="terrain" aria-pressed="true">Terrain</button>
+              <button type="button" class="mesh-btn" data-mesh-shape="geosphere" aria-pressed="false">Geosphere</button>
+              <button type="button" class="mesh-btn" data-mesh-shape="torusknot" aria-pressed="false">Torus knot</button>
+              <button type="button" class="mesh-btn" data-mesh-shape="waveplane" aria-pressed="false">Ribbon</button>
+              </div>
+              <div class="mesh-group" role="group" aria-label="Render mode">
+              <button type="button" class="mesh-btn" data-mesh-mode="dual" aria-pressed="true">Dual mesh</button>
+              <button type="button" class="mesh-btn" data-mesh-mode="wireframe" aria-pressed="false">Wireframe</button>
+              <button type="button" class="mesh-btn" data-mesh-mode="solid" aria-pressed="false">Solid</button>
+              <button type="button" class="mesh-btn" data-mesh-mode="points" aria-pressed="false">Points</button>
+              </div>
+            </div>
+            <figcaption class="mesh-caption">
+              <span>Drag to rotate · hover for ripple</span>
+              <span class="mesh-actions">
+                <button type="button" class="mesh-link" id="meshAutoRotate" aria-pressed="true">Auto-rotate</button>
+                <button type="button" class="mesh-link" id="meshReset">Reset camera</button>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
     </main>
 
-    <footer class="main-footer">
-  <div class="footer-loc">Based by the beach • Remote Worldwide</div>
-  <div class="footer-socials">
-    <a href="https://www.linkedin.com/in/sydneytalcott/">Linkedin</a>
-    <a href="https://github.com/sydneytalcott">Github</a>
-    <a href="mailto:sydney.tal@gmail.com">Mail</a>
+    <section id="contact" class="section reveal">
+  <h2 class="section-label">Contact</h2>
+  <div class="section-body">
+    <div class="contact-links">
+      <a href="mailto:sydney.tal@gmail.com">sydney.tal@gmail.com</a>
+      <a href="https://www.linkedin.com/in/sydneytalcott/">LinkedIn</a>
+      <a href="https://github.com/sydneytalcott">GitHub</a>
+    </div>
   </div>
+</section>
+
+
+    <footer class="main-footer">
+  <div class="footer-loc">Open to remote and hybrid roles</div>
+  <div class="footer-copy">© 2026 Sydney Talcott</div>
 </footer>
 
   </div>

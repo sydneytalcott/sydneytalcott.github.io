@@ -10,9 +10,19 @@
           "required": true
         },
         {
-          "name": "heroName",
-          "label": "Hero Name",
-          "type": "text",
+          "name": "metaDescription",
+          "label": "Search & Social Description",
+          "type": "textarea"
+        },
+        {
+          "name": "heroEyebrow",
+          "label": "Hero Eyebrow",
+          "type": "text"
+        },
+        {
+          "name": "heroHeadline",
+          "label": "Hero Headline",
+          "type": "textarea",
           "required": true
         },
         {
@@ -22,12 +32,22 @@
         },
         {
           "name": "ctaText",
-          "label": "CTA Button Text",
+          "label": "Primary Button Text",
           "type": "text"
         },
         {
           "name": "ctaLink",
-          "label": "CTA Link URL",
+          "label": "Primary Button Link",
+          "type": "text"
+        },
+        {
+          "name": "cta2Text",
+          "label": "Secondary Button Text",
+          "type": "text"
+        },
+        {
+          "name": "cta2Link",
+          "label": "Secondary Button Link",
           "type": "text"
         },
         {
@@ -47,59 +67,74 @@
           "type": "text"
         },
         {
+          "name": "aboutLead",
+          "label": "About Lead Sentence",
+          "type": "textarea"
+        },
+        {
           "name": "aboutText",
           "label": "About Text",
           "type": "textarea"
         },
         {
           "name": "focusLabel",
-          "label": "Focus Column Heading",
+          "label": "Column 1 Heading",
           "type": "text"
         },
         {
           "name": "focus1",
-          "label": "Focus 1",
+          "label": "Column 1 Item 1",
           "type": "text"
         },
         {
           "name": "focus2",
-          "label": "Focus 2",
+          "label": "Column 1 Item 2",
           "type": "text"
         },
         {
           "name": "focus3",
-          "label": "Focus 3",
+          "label": "Column 1 Item 3",
           "type": "text"
         },
         {
           "name": "focus4",
-          "label": "Focus 4",
+          "label": "Column 1 Item 4",
           "type": "text"
         },
         {
           "name": "skillsLabel",
-          "label": "Skills Column Heading",
+          "label": "Column 2 Heading",
           "type": "text"
         },
         {
           "name": "skill1",
-          "label": "Skill 1",
+          "label": "Column 2 Item 1",
           "type": "text"
         },
         {
           "name": "skill2",
-          "label": "Skill 2",
+          "label": "Column 2 Item 2",
           "type": "text"
         },
         {
           "name": "skill3",
-          "label": "Skill 3",
+          "label": "Column 2 Item 3",
           "type": "text"
         },
         {
           "name": "skill4",
-          "label": "Skill 4",
+          "label": "Column 2 Item 4",
           "type": "text"
+        },
+        {
+          "name": "lookingLabel",
+          "label": "Column 3 Heading",
+          "type": "text"
+        },
+        {
+          "name": "lookingText",
+          "label": "Column 3 Text",
+          "type": "textarea"
         },
         {
           "name": "experienceTitle",
@@ -122,6 +157,21 @@
           "type": "text"
         },
         {
+          "name": "exp1Point1",
+          "label": "Experience 1 Point 1",
+          "type": "textarea"
+        },
+        {
+          "name": "exp1Point2",
+          "label": "Experience 1 Point 2",
+          "type": "textarea"
+        },
+        {
+          "name": "exp1Point3",
+          "label": "Experience 1 Point 3",
+          "type": "textarea"
+        },
+        {
           "name": "exp2Years",
           "label": "Experience 2 Years",
           "type": "text"
@@ -137,6 +187,21 @@
           "type": "text"
         },
         {
+          "name": "exp2Point1",
+          "label": "Experience 2 Point 1",
+          "type": "textarea"
+        },
+        {
+          "name": "exp2Point2",
+          "label": "Experience 2 Point 2",
+          "type": "textarea"
+        },
+        {
+          "name": "exp2Point3",
+          "label": "Experience 2 Point 3",
+          "type": "textarea"
+        },
+        {
           "name": "exp3Years",
           "label": "Experience 3 Years",
           "type": "text"
@@ -150,6 +215,41 @@
           "name": "exp3Company",
           "label": "Experience 3 Company",
           "type": "text"
+        },
+        {
+          "name": "exp3Point1",
+          "label": "Experience 3 Point 1",
+          "type": "textarea"
+        },
+        {
+          "name": "exp3Point2",
+          "label": "Experience 3 Point 2",
+          "type": "textarea"
+        },
+        {
+          "name": "exp3Point3",
+          "label": "Experience 3 Point 3",
+          "type": "textarea"
+        },
+        {
+          "name": "caseStudyLinkText",
+          "label": "Case Study Link Text (behind caseStudies flag)",
+          "type": "text"
+        },
+        {
+          "name": "earlierYears",
+          "label": "Earlier Years",
+          "type": "text"
+        },
+        {
+          "name": "earlierRole",
+          "label": "Earlier Heading",
+          "type": "text"
+        },
+        {
+          "name": "earlierText",
+          "label": "Earlier Text",
+          "type": "textarea"
         }
       ]
     },
@@ -163,9 +263,9 @@
           "required": true
         },
         {
-          "name": "categoryTag",
-          "label": "Category Tag",
-          "type": "text"
+          "name": "metaDescription",
+          "label": "Search & Social Description",
+          "type": "textarea"
         },
         {
           "name": "intro",
@@ -173,19 +273,114 @@
           "type": "textarea"
         },
         {
+          "name": "caseStudiesTitle",
+          "label": "Case Studies Heading (behind caseStudies flag)",
+          "type": "text"
+        },
+        {
+          "name": "cs1Meta",
+          "label": "Case Study 1 Company / Role / Years",
+          "type": "text"
+        },
+        {
+          "name": "cs1Title",
+          "label": "Case Study 1 Title",
+          "type": "text"
+        },
+        {
+          "name": "cs1Problem",
+          "label": "Case Study 1 Problem",
+          "type": "textarea"
+        },
+        {
+          "name": "cs1Role",
+          "label": "Case Study 1 Role",
+          "type": "textarea"
+        },
+        {
+          "name": "cs1Decisions",
+          "label": "Case Study 1 Decisions",
+          "type": "textarea"
+        },
+        {
+          "name": "cs1Result",
+          "label": "Case Study 1 Result",
+          "type": "textarea"
+        },
+        {
+          "name": "cs2Meta",
+          "label": "Case Study 2 Company / Role / Years",
+          "type": "text"
+        },
+        {
+          "name": "cs2Title",
+          "label": "Case Study 2 Title",
+          "type": "text"
+        },
+        {
+          "name": "cs2Problem",
+          "label": "Case Study 2 Problem",
+          "type": "textarea"
+        },
+        {
+          "name": "cs2Role",
+          "label": "Case Study 2 Role",
+          "type": "textarea"
+        },
+        {
+          "name": "cs2Decisions",
+          "label": "Case Study 2 Decisions",
+          "type": "textarea"
+        },
+        {
+          "name": "cs2Result",
+          "label": "Case Study 2 Result",
+          "type": "textarea"
+        },
+        {
+          "name": "cs3Meta",
+          "label": "Case Study 3 Company / Role / Years",
+          "type": "text"
+        },
+        {
+          "name": "cs3Title",
+          "label": "Case Study 3 Title",
+          "type": "text"
+        },
+        {
+          "name": "cs3Problem",
+          "label": "Case Study 3 Problem",
+          "type": "textarea"
+        },
+        {
+          "name": "cs3Role",
+          "label": "Case Study 3 Role",
+          "type": "textarea"
+        },
+        {
+          "name": "cs3Decisions",
+          "label": "Case Study 3 Decisions",
+          "type": "textarea"
+        },
+        {
+          "name": "cs3Result",
+          "label": "Case Study 3 Result",
+          "type": "textarea"
+        },
+        {
+          "name": "explorationsTitle",
+          "label": "Explorations Heading",
+          "type": "text"
+        },
+        {
           "name": "projectTitle",
           "label": "Project Title",
           "type": "text"
         },
         {
-          "name": "backLabel",
-          "label": "Back Link Text",
-          "type": "text"
-        },
-        {
-          "name": "contactCta",
-          "label": "Contact Button Text",
-          "type": "text"
+          "name": "projectIntro",
+          "label": "Project Intro",
+          "type": "textarea"
         }
       ]
     }
@@ -205,34 +400,54 @@
       "updatedAt": "",
       "content": {
         "title": "Sydney Talcott",
-        "heroName": "Sydney Talcott",
-        "heroSubtitle": "Designer by training. Artist by craft. Product leader by mission.",
-        "ctaText": "View Selected Works",
+        "metaDescription": "Sydney Talcott is a product leader for 3D, spatial computing and real estate tech, trained as an architect. Product work at Magic Leap, Zillow and CBRE.",
+        "heroEyebrow": "Open to product leadership roles",
+        "heroHeadline": "Product leader for 3D, spatial computing and real estate tech. Trained as an architect.",
+        "heroSubtitle": "I build the tools and platforms people use to design, visualize and work in three dimensions, most recently at Magic Leap, Zillow and CBRE.",
+        "ctaText": "View work",
         "ctaLink": "/work",
+        "cta2Text": "Get in touch",
+        "cta2Link": "#contact",
         "aboutTitle": "About",
         "aboutImage": "/media/profile.jpg",
         "aboutImageAlt": "Sydney Talcott Portrait",
-        "aboutText": "I build products at the intersection of hardware and software. By combining a deep understanding of spatial design with years of experience leading technical creative teams, I focus on shaping the tools and platforms that empower creators in the spatial computing era. I bridge the gap between creative vision and strategic execution to build the future of immersive technology.",
-        "focusLabel": "Focus",
-        "focus1": "Spatial Experience Design",
-        "focus2": "Product Strategy",
-        "focus3": "Human-Computer Interaction",
-        "focus4": "Creative Tooling",
-        "skillsLabel": "Skills",
-        "skill1": "Spatial Design Systems & OS Logic",
-        "skill2": "AI Implementation",
-        "skill3": "3D Content Creation",
-        "skill4": "Generative AI Strategy & Prompt Design",
+        "aboutLead": "I trained as an architect, and I still approach products the way I approached buildings: by making complex systems intuitive for the people who use them.",
+        "aboutText": "Since 2013 I have built 3D and spatial products for real estate and XR: interactive 3D visualization and digital twins for commercial real estate at Floored and CBRE, 3D home capture across millions of listings at Zillow, and spatial OS applications at Magic Leap. Most recently I have been on assignment at Google, leading product definition for Android XR.",
+        "focusLabel": "Product",
+        "focus1": "Product strategy and roadmapping",
+        "focus2": "Discovery and user research",
+        "focus3": "Go-to-market",
+        "focus4": "Cross-functional leadership",
+        "skillsLabel": "Domain",
+        "skill1": "Spatial experience design",
+        "skill2": "3D content creation and pipelines",
+        "skill3": "Creative tooling",
+        "skill4": "Generative AI in product",
+        "lookingLabel": "Looking for",
+        "lookingText": "Product leadership roles in spatial computing, 3D tooling and real estate tech. Remote or hybrid, United States.",
         "experienceTitle": "Experience",
-        "exp1Years": "2022 — 2026",
+        "exp1Years": "2022 – Present",
         "exp1Role": "Principal Product Manager, Strategic Consulting",
-        "exp1Company": "Magic Leap",
-        "exp2Years": "2021 — 2022",
+        "exp1Company": "Magic Leap · on assignment at Google",
+        "exp1Point1": "Lead product definition and cross-company execution for Android XR identity, biometric authentication and custom device fitting, and direct strategy for core Android XR system applications and spatial AI agent features.",
+        "exp1Point2": "Owned strategy and roadmaps for Magic Leap’s user-facing OS applications, platform services and app distribution, and developed a patent-pending predictive ML model to optimize 3D environment generation and reduce spatial tracking latency.",
+        "exp1Point3": "Shipped Magic Leap’s first on-device 3D viewing app and an NVIDIA Omniverse USD viewer for enterprise developers.",
+        "exp2Years": "2021 – 2022",
         "exp2Role": "Senior Product Manager",
         "exp2Company": "Zillow",
-        "exp3Years": "2017 — 2021",
+        "exp2Point1": "Defined product strategy and roadmap for creator tools and partner workflows across Zillow’s platform.",
+        "exp2Point2": "Evolved Zillow’s immersive 3D digital twin capture application, scaling spatial mapping across millions of interactive listings.",
+        "exp2Point3": "",
+        "exp3Years": "2017 – 2021",
         "exp3Role": "Senior Director, Product Management & Visualization",
-        "exp3Company": "CBRE"
+        "exp3Company": "CBRE",
+        "exp3Point1": "Oversaw global product strategy, budgeting and execution across advisory, transaction and marketing technology portfolios, leading distributed product, design and vendor teams.",
+        "exp3Point2": "Built and scaled a global visualization studio for enterprise real estate marketing and sales pitches, and owned internal 3D tooling strategy.",
+        "exp3Point3": "Led the post-acquisition integration of Floored’s 3D platform into CBRE and defined the operating strategy for enterprise digital twin initiatives.",
+        "caseStudyLinkText": "Case study →",
+        "earlierYears": "2011 – 2017",
+        "earlierRole": "3D art direction and architecture",
+        "earlierText": "Floored: Senior 3D Artist to Director of 3D Art & Production (2013–2017) · SHoP Architects: Visualization Specialist (2013) · Columbia University GSAPP: design studio teaching assistant and Urban Landscape Lab research assistant (2011–2013)"
       }
     },
     "work": {
@@ -244,11 +459,30 @@
       "updatedAt": "",
       "content": {
         "title": "Work",
-        "categoryTag": "Selected Systems & Explorations",
-        "intro": "Interactive studies and product prototypes at the intersection of spatial computing, generative geometry, and human-computer interfaces.",
-        "projectTitle": "Interactive 3D Mesh",
-        "backLabel": "Back to Overview",
-        "contactCta": "Get In Touch"
+        "metaDescription": "Product work and explorations in spatial computing and generative geometry by Sydney Talcott.",
+        "intro": "Product work and explorations in spatial computing and generative geometry.",
+        "caseStudiesTitle": "Case studies",
+        "cs1Meta": "Magic Leap · Principal Product Manager · 2022–Present",
+        "cs1Title": "[Case study title]",
+        "cs1Problem": "[Who had it and why it mattered.]",
+        "cs1Role": "[What you owned, team size.]",
+        "cs1Decisions": "[The key trade-off you made.]",
+        "cs1Result": "[Measured outcome.]",
+        "cs2Meta": "Zillow · Senior Product Manager · 2021–2022",
+        "cs2Title": "[Case study title]",
+        "cs2Problem": "[Who had it and why it mattered.]",
+        "cs2Role": "[What you owned, team size.]",
+        "cs2Decisions": "[The key trade-off you made.]",
+        "cs2Result": "[Measured outcome.]",
+        "cs3Meta": "CBRE · Senior Director, Product & Visualization · 2017–2021",
+        "cs3Title": "[Case study title]",
+        "cs3Problem": "[Who had it and why it mattered.]",
+        "cs3Role": "[What you owned, team size.]",
+        "cs3Decisions": "[The key trade-off you made.]",
+        "cs3Result": "[Measured outcome.]",
+        "explorationsTitle": "Explorations",
+        "projectTitle": "Interactive 3D mesh",
+        "projectIntro": "A generative geometry study in WebGL and Three.js."
       }
     }
   },
@@ -256,16 +490,16 @@
     "primary": {
       "menu_items": [
         {
-          "label": "about",
+          "label": "Work",
+          "slug": "/work"
+        },
+        {
+          "label": "About",
           "slug": "/#about"
         },
         {
-          "label": "experience",
+          "label": "Experience",
           "slug": "/#experience"
-        },
-        {
-          "label": "work",
-          "slug": "/work"
         }
       ]
     }
@@ -273,7 +507,7 @@
   "settings": {
     "siteTitle": "Sydney Talcott",
     "siteUrl": "/",
-    "siteLatestCommitMessage": "Convert site to Zazen structure",
+    "siteLatestCommitMessage": "Redesign home and work pages; case studies behind a flag",
     "siteGithubRepoLink": "https://github.com/sydneytalcott/sydneytalcott.github.io",
     "branch": "main",
     "universalTags": {
@@ -281,7 +515,8 @@
       "contactEmail": "sydney.tal@gmail.com",
       "linkedinUrl": "https://www.linkedin.com/in/sydneytalcott/",
       "githubUrl": "https://github.com/sydneytalcott",
-      "location": "Based by the beach • Remote Worldwide"
+      "location": "Open to remote and hybrid roles",
+      "caseStudies": "off"
     },
     "navigation": "primary",
     "deploy": {
@@ -292,7 +527,8 @@
   "components": {
     "head": "registry/components/head.html",
     "header": "registry/components/header.html",
-    "footer": "registry/components/footer.html"
+    "footer": "registry/components/footer.html",
+    "contact": "registry/components/contact.html"
   },
   "styles": {
     "main.css": "registry/styles/main.css"

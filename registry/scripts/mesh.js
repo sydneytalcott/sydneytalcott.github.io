@@ -31,11 +31,14 @@ function initInteractiveMesh() {
   function fitCamera(radius) {
     const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
     const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
-    fitDistance = (radius * 1.05) / Math.sin(Math.min(vHalf, hHalf));
+    fitDistance = (radius * 1.05 * fitScale) / Math.sin(Math.min(vHalf, hHalf));
     camera.position.copy(viewDir).multiplyScalar(fitDistance);
     camera.lookAt(0, 0, 0);
   }
   let boundRadius = 14;
+  // Optional per-page tuning: data-fit scales the camera distance, data-wheel-zoom="false" leaves page scroll alone
+  const fitScale = parseFloat(container.dataset.fit) || 1;
+  const wheelZoom = container.dataset.wheelZoom !== 'false';
 
   // Renderer setup
   const renderer = new THREE.WebGLRenderer({
@@ -183,6 +186,52 @@ function initInteractiveMesh() {
   // Initial build
   buildGeometry(state.geometryType);
 
+  // Stage controls (present on the work page only)
+  const vertexReadout = document.getElementById('meshVertexCount');
+  const fpsReadout = document.getElementById('meshFps');
+  const updateVertexReadout = () => {
+    if (vertexReadout) vertexReadout.textContent = vertexCount.toLocaleString();
+  };
+  updateVertexReadout();
+
+  const bindGroup = (attr, apply) => {
+    const buttons = document.querySelectorAll('[' + attr + ']');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        apply(btn.getAttribute(attr));
+        buttons.forEach((b) => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+      });
+    });
+  };
+
+  bindGroup('data-mesh-shape', (type) => {
+    state.geometryType = type;
+    buildGeometry(type);
+    updateVertexReadout();
+  });
+
+  bindGroup('data-mesh-mode', (mode) => {
+    state.renderMode = mode;
+    updateVisibility();
+  });
+
+  const autoRotateBtn = document.getElementById('meshAutoRotate');
+  if (autoRotateBtn) {
+    autoRotateBtn.addEventListener('click', () => {
+      state.autoRotate = !state.autoRotate;
+      autoRotateBtn.setAttribute('aria-pressed', state.autoRotate ? 'true' : 'false');
+    });
+  }
+
+  const resetBtn = document.getElementById('meshReset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      state.targetRotationX = 0.35;
+      state.targetRotationY = 0;
+      fitCamera(boundRadius);
+    });
+  }
+
   // Mouse & Touch Controls
   canvas.addEventListener('mousedown', (e) => {
     state.isDragging = true;
@@ -240,6 +289,7 @@ function initInteractiveMesh() {
 
   // Zoom with wheel
   canvas.addEventListener('wheel', (e) => {
+    if (!wheelZoom) return;
     e.preventDefault();
     // Zoom out freely, but never in past the point where the mesh would clip
     const d = Math.max(fitDistance, Math.min(fitDistance * 1.6, camera.position.length() + e.deltaY * 0.02));
@@ -261,6 +311,8 @@ function initInteractiveMesh() {
 
   // Animation Loop with Procedural Wave Engine
   let clock = 0;
+  let fpsFrames = 0;
+  let fpsSince = performance.now();
 
   function animate(now) {
     requestAnimationFrame(animate);
@@ -268,6 +320,13 @@ function initInteractiveMesh() {
     const delta = (now - state.lastTime) * 0.001;
     state.lastTime = now;
     clock += delta * state.speed;
+
+    fpsFrames++;
+    if (fpsReadout && now - fpsSince >= 500) {
+      fpsReadout.textContent = Math.round((fpsFrames * 1000) / (now - fpsSince));
+      fpsFrames = 0;
+      fpsSince = now;
+    }
 
     // Auto-rotation & smooth damping
     if (state.autoRotate && !state.isDragging) {
