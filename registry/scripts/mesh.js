@@ -29,9 +29,45 @@ function initInteractiveMesh(container) {
   // Place the camera far enough that the mesh's bounding sphere (which is what
   // sweeps out as it rotates about its center) always stays inside the frame.
   function fitCamera(radius) {
+    if (tightFit && tightPoints) { fitTight(); return; }
     const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
     const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
     fitDistance = (radius * 1.05 * fitScale) / Math.sin(Math.min(vHalf, hHalf));
+    camera.position.copy(viewDir).multiplyScalar(fitDistance);
+    camera.lookAt(0, 0, 0);
+  }
+  // data-fit="tight": instead of the bounding sphere, find the closest camera distance at which the actual
+  // mesh (including wave displacement) stays inside the frame at every rotation, so the mesh is as large as it can be
+  const tightFit = container.dataset.fit === 'tight';
+  let tightPoints = null;
+  function fitTight() {
+    const probe = new THREE.PerspectiveCamera(camera.fov, camera.aspect, 0.1, 200);
+    const v = new THREE.Vector3();
+    const euler = new THREE.Euler();
+    const rotations = [];
+    // Default tilt plus a little either side, around a full turn
+    for (let a = 0; a < 36; a++) {
+      for (const tilt of [0.35, 0.5]) rotations.push(new THREE.Euler(tilt, (a / 36) * Math.PI * 2, 0));
+    }
+    const fits = (d) => {
+      probe.position.copy(viewDir).multiplyScalar(d);
+      probe.lookAt(0, 0, 0);
+      probe.updateMatrixWorld(true);
+      probe.updateProjectionMatrix();
+      for (const r of rotations) {
+        for (let i = 0; i < tightPoints.length; i += 3) {
+          v.set(tightPoints[i], tightPoints[i + 1], tightPoints[i + 2]).applyEuler(r).project(probe);
+          if (Math.abs(v.x) > 0.96 || Math.abs(v.y) > 0.96) return false;
+        }
+      }
+      return true;
+    };
+    let lo = 5, hi = 200;
+    for (let k = 0; k < 12; k++) {
+      const mid = (lo + hi) / 2;
+      if (fits(mid)) hi = mid; else lo = mid;
+    }
+    fitDistance = hi;
     camera.position.copy(viewDir).multiplyScalar(fitDistance);
     camera.lookAt(0, 0, 0);
   }
@@ -70,7 +106,7 @@ function initInteractiveMesh(container) {
   // State Management
   const state = {
     geometryType: container.dataset.shape || 'terrain', // terrain, geosphere, torusknot, waveplane
-    renderMode: 'dual',      // wireframe, solid, dual, points
+    renderMode: container.dataset.render || 'dual', // wireframe, solid, dual, points, dots (white fill + dots)
     speed: 1.0,
     amplitude: 0.8,
     frequency: 0.6,
@@ -141,13 +177,34 @@ function initInteractiveMesh(container) {
       maxLen = Math.max(maxLen, Math.hypot(basePositions[i * 3], basePositions[i * 3 + 1], basePositions[i * 3 + 2]));
     }
     boundRadius = maxLen + 2.5;
+    if (tightFit) {
+      // Only the outermost vertices set the extent; test each at its highest and lowest wave displacement
+      const edge = [];
+      let maxX = 0, maxY = 0, maxZ = 0;
+      for (let i = 0; i < posAttr.count; i++) {
+        maxX = Math.max(maxX, Math.abs(basePositions[i * 3]));
+        maxY = Math.max(maxY, Math.abs(basePositions[i * 3 + 1]));
+        maxZ = Math.max(maxZ, Math.abs(basePositions[i * 3 + 2]));
+      }
+      for (let i = 0; i < posAttr.count; i++) {
+        const x = basePositions[i * 3], y = basePositions[i * 3 + 1], z = basePositions[i * 3 + 2];
+        if (Math.abs(x) > maxX - 1e-3 || Math.abs(y) > maxY - 1e-3 || Math.abs(z) > maxZ - 1e-3) {
+          edge.push(x, y, z + 2.2, x, y, z - 2.2);
+        }
+      }
+      tightPoints = new Float32Array(edge);
+    }
     fitCamera(boundRadius);
 
     // Materials
     // Flat white fill matches the page so the black wireframe reads as floating line work
     const solidMaterial = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      side: THREE.DoubleSide
+      side: THREE.DoubleSide,
+      // Push the fill back slightly so dots sitting on the surface aren't z-fought away
+      polygonOffset: true,
+      polygonOffsetFactor: 1,
+      polygonOffsetUnits: 1
     });
 
     const wireMaterial = new THREE.MeshBasicMaterial({
@@ -157,7 +214,7 @@ function initInteractiveMesh(container) {
 
     const pointsMaterial = new THREE.PointsMaterial({
       color: 0x000000,
-      size: 0.08
+      size: 0.15
     });
 
     // Create representations based on render mode
@@ -178,6 +235,9 @@ function initInteractiveMesh(container) {
     } else if (state.renderMode === 'dual') {
       meshGroup.add(solidMesh);
       meshGroup.add(wireMesh);
+    } else if (state.renderMode === 'dots') {
+      meshGroup.add(solidMesh);
+      meshGroup.add(pointCloud);
     } else if (state.renderMode === 'points') {
       meshGroup.add(pointCloud);
     }
