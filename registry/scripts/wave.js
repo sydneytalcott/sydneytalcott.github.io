@@ -2,7 +2,8 @@
 // Line color follows the canvas's CSS `color`. Tune SPEED, COLS and ROWS below.
 document.addEventListener('DOMContentLoaded', () => {
   const SPEED = 1;
-  const W = 680, H = 150, TOP = 158; // drawing units; TOP crops the empty sky above the crest
+  const W = 680, H = 75, TOP = 158; // drawing units; TOP crops the empty sky above the crest
+  const SQUASH = 0.5; // vertical compression of the whole wave (1 = original proportions); keep H = 150 * SQUASH
   const NEAR = 0.22; // where the mesh starts in front of the crest (0 = full-depth base, higher = shorter base)
 
   document.querySelectorAll('canvas.mesh-wave').forEach((c) => {
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const s = 1 / (1 + (y - h * 0.14) * 1.5);
           k = j * COLS + i;
           px[k] = 340 + x * 380 * s;
-          py[k] = 70 - TOP + (1.0 - h * 0.62) * 300 * s;
+          py[k] = (70 - TOP + (1.0 - h * 0.62) * 300 * s) * SQUASH;
         }
       }
       for (j = 0; j < ROWS; j++) {
