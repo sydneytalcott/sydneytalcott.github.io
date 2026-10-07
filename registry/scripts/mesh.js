@@ -70,7 +70,7 @@ function initInteractiveMesh(container) {
   // State Management
   const state = {
     geometryType: container.dataset.shape || 'terrain', // terrain, geosphere, torusknot, waveplane
-    renderMode: 'dual',      // wireframe, solid, dual, points
+    renderMode: container.dataset.render || 'dual', // wireframe, solid, dual, points, dots (white fill + dots)
     speed: 1.0,
     amplitude: 0.8,
     frequency: 0.6,
@@ -147,7 +147,11 @@ function initInteractiveMesh(container) {
     // Flat white fill matches the page so the black wireframe reads as floating line work
     const solidMaterial = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      side: THREE.DoubleSide
+      side: THREE.DoubleSide,
+      // Push the fill back slightly so dots sitting on the surface aren't z-fought away
+      polygonOffset: true,
+      polygonOffsetFactor: 1,
+      polygonOffsetUnits: 1
     });
 
     const wireMaterial = new THREE.MeshBasicMaterial({
@@ -157,7 +161,7 @@ function initInteractiveMesh(container) {
 
     const pointsMaterial = new THREE.PointsMaterial({
       color: 0x000000,
-      size: 0.08
+      size: 0.15
     });
 
     // Create representations based on render mode
@@ -178,6 +182,9 @@ function initInteractiveMesh(container) {
     } else if (state.renderMode === 'dual') {
       meshGroup.add(solidMesh);
       meshGroup.add(wireMesh);
+    } else if (state.renderMode === 'dots') {
+      meshGroup.add(solidMesh);
+      meshGroup.add(pointCloud);
     } else if (state.renderMode === 'points') {
       meshGroup.add(pointCloud);
     }
