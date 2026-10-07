@@ -2,8 +2,10 @@
 // Line color follows the canvas's CSS `color`. Tune SPEED, COLS and ROWS below.
 document.addEventListener('DOMContentLoaded', () => {
   const SPEED = 1;
-  const W = 680, H = 75, TOP = 158; // drawing units; TOP crops the empty sky above the crest
-  const SQUASH = 0.5; // vertical compression of the whole wave (1 = original proportions); keep H = 150 * SQUASH
+  const STYLE = 'dots'; // 'dots' = a dot at each mesh vertex, 'lines' = wireframe
+  const W = 680, H = 75, TOP = 143; // drawing units; TOP crops the empty sky above the crest (sized for AMP = 1.4)
+  const SQUASH = 75 / 168; // vertical compression of the whole wave (1 = original proportions); H is the visible span times SQUASH
+  const AMP = 1.4; // wave height multiplier (1 = original)
   const NEAR = 0.22; // where the mesh starts in front of the crest (0 = full-depth base, higher = shorter base)
 
   document.querySelectorAll('canvas.mesh-wave').forEach((c) => {
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Coarser mesh and proportionally heavier lines on narrow screens so it stays legible
       const narrow = w < 600;
       COLS = narrow ? 96 : 170;
+      if (STYLE === 'dots') { COLS = narrow ? 190 : 520; ROWS = narrow ? 45 : 71; } // far denser across, to balance the closely spaced rows
       ROWS = narrow ? 41 : 61;
       thick = Math.max(1, 0.75 / (w / W));
       px = new Float32Array(COLS * ROWS);
@@ -37,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const ripple = 0.035 * Math.sin(x * 3.1 + y * 15 - t * 1.1)
                    + 0.025 * Math.sin(x * 5.3 - y * 10 + t * 1.4)
                    + 0.02 * Math.sin(y * 26 + t * 0.8);
-      return crest + ripple;
+      return (crest + ripple) * AMP;
     }
 
     function draw(t) {
@@ -47,8 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
       let i, j, k;
       for (j = 0; j < ROWS; j++) {
         const y = NEAR + (1 - NEAR) * j / (ROWS - 1);
+        const stagger = STYLE === 'dots' && j % 2 ? 0.5 : 0; // offset alternate rows so dots don't line up into streaks
         for (i = 0; i < COLS; i++) {
-          const x = (i / (COLS - 1) * 2 - 1) * 2.3;
+          const x = ((i + stagger) / (COLS - 1) * 2 - 1) * 2.3;
           const h = height(x, y, t);
           const s = 1 / (1 + (y - h * 0.14) * 1.5);
           k = j * COLS + i;
@@ -56,20 +60,34 @@ document.addEventListener('DOMContentLoaded', () => {
           py[k] = (70 - TOP + (1.0 - h * 0.62) * 300 * s) * SQUASH;
         }
       }
-      for (j = 0; j < ROWS; j++) {
-        const a = (1 - NEAR) * (1 - j / (ROWS - 1));
-        g.globalAlpha = 0.28 + 0.62 * a;
-        g.lineWidth = (0.35 + 0.45 * a) * thick;
-        g.beginPath();
-        for (i = 0; i < COLS; i++) { k = j * COLS + i; if (i) g.lineTo(px[k], py[k]); else g.moveTo(px[k], py[k]); }
-        g.stroke();
-      }
-      g.lineWidth = 0.4 * thick;
-      g.globalAlpha = 0.5;
-      for (i = 0; i < COLS; i++) {
-        g.beginPath();
-        for (j = 0; j < ROWS; j++) { k = j * COLS + i; if (j) g.lineTo(px[k], py[k]); else g.moveTo(px[k], py[k]); }
-        g.stroke();
+      if (STYLE === 'dots') {
+        // One dot per mesh vertex; nearer rows get larger, darker dots
+        g.fillStyle = g.strokeStyle;
+        for (j = 0; j < ROWS; j++) {
+          const a = (1 - NEAR) * (1 - j / (ROWS - 1));
+          const r = (0.22 + 0.24 * a) * thick;
+          g.globalAlpha = 0.4 + 0.6 * a;
+          g.beginPath();
+          // Tiny squares read as dots at this size and are much cheaper to draw than arcs
+          for (i = 0; i < COLS; i++) { k = j * COLS + i; g.rect(px[k] - r, py[k] - r, 2 * r, 2 * r); }
+          g.fill();
+        }
+      } else {
+        for (j = 0; j < ROWS; j++) {
+          const a = (1 - NEAR) * (1 - j / (ROWS - 1));
+          g.globalAlpha = 0.28 + 0.62 * a;
+          g.lineWidth = (0.35 + 0.45 * a) * thick;
+          g.beginPath();
+          for (i = 0; i < COLS; i++) { k = j * COLS + i; if (i) g.lineTo(px[k], py[k]); else g.moveTo(px[k], py[k]); }
+          g.stroke();
+        }
+        g.lineWidth = 0.4 * thick;
+        g.globalAlpha = 0.5;
+        for (i = 0; i < COLS; i++) {
+          g.beginPath();
+          for (j = 0; j < ROWS; j++) { k = j * COLS + i; if (j) g.lineTo(px[k], py[k]); else g.moveTo(px[k], py[k]); }
+          g.stroke();
+        }
       }
       g.globalAlpha = 1;
     }
