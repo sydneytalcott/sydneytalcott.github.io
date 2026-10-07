@@ -21,8 +21,21 @@ function initInteractiveMesh() {
     0.1,
     100
   );
-  camera.position.set(0, 8, 18);
-  camera.lookAt(0, -2.5, 0);
+  const viewDir = new THREE.Vector3(0, 0.4, 1).normalize();
+  let fitDistance = 30;
+  camera.position.copy(viewDir).multiplyScalar(fitDistance);
+  camera.lookAt(0, 0, 0);
+
+  // Place the camera far enough that the mesh's bounding sphere (which is what
+  // sweeps out as it rotates about its center) always stays inside the frame.
+  function fitCamera(radius) {
+    const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
+    const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
+    fitDistance = (radius * 1.05) / Math.sin(Math.min(vHalf, hHalf));
+    camera.position.copy(viewDir).multiplyScalar(fitDistance);
+    camera.lookAt(0, 0, 0);
+  }
+  let boundRadius = 14;
 
   // Renderer setup
   const renderer = new THREE.WebGLRenderer({
@@ -118,6 +131,14 @@ function initInteractiveMesh() {
     basePositions = new Float32Array(posAttr.array.length);
     basePositions.set(posAttr.array);
     vertexCount = posAttr.count;
+
+    // Furthest vertex from the origin, plus headroom for the wave displacement
+    let maxLen = 0;
+    for (let i = 0; i < posAttr.count; i++) {
+      maxLen = Math.max(maxLen, Math.hypot(basePositions[i * 3], basePositions[i * 3 + 1], basePositions[i * 3 + 2]));
+    }
+    boundRadius = maxLen + 2.5;
+    fitCamera(boundRadius);
 
     // Materials
     // Flat white fill matches the page so the black wireframe reads as floating line work
@@ -220,7 +241,9 @@ function initInteractiveMesh() {
   // Zoom with wheel
   canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
-    camera.position.z = Math.max(6, Math.min(22, camera.position.z + e.deltaY * 0.01));
+    // Zoom out freely, but never in past the point where the mesh would clip
+    const d = Math.max(fitDistance, Math.min(fitDistance * 1.6, camera.position.length() + e.deltaY * 0.02));
+    camera.position.copy(viewDir).multiplyScalar(d);
   }, { passive: false });
 
   // Resize Observer
@@ -231,6 +254,7 @@ function initInteractiveMesh() {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      fitCamera(boundRadius);
     }
   });
   resizeObserver.observe(container);

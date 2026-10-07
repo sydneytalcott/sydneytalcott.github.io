@@ -178,21 +178,6 @@
           "type": "text"
         },
         {
-          "name": "tag1",
-          "label": "Tag 1",
-          "type": "text"
-        },
-        {
-          "name": "tag2",
-          "label": "Tag 2",
-          "type": "text"
-        },
-        {
-          "name": "tag3",
-          "label": "Tag 3",
-          "type": "text"
-        },
-        {
           "name": "backLabel",
           "label": "Back Link Text",
           "type": "text"
@@ -262,9 +247,6 @@
         "categoryTag": "Selected Systems & Explorations",
         "intro": "Interactive studies and product prototypes at the intersection of spatial computing, generative geometry, and human-computer interfaces.",
         "projectTitle": "Interactive 3D Mesh",
-        "tag1": "Spatial Computing",
-        "tag2": "WebGL / Three.js",
-        "tag3": "Generative Geometry",
         "backLabel": "Back to Overview",
         "contactCta": "Get In Touch"
       }
