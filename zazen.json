@@ -528,14 +528,16 @@
     "head": "registry/components/head.html",
     "header": "registry/components/header.html",
     "footer": "registry/components/footer.html",
-    "contact": "registry/components/contact.html"
+    "contact": "registry/components/contact.html",
+    "wave": "registry/components/wave.html"
   },
   "styles": {
     "main.css": "registry/styles/main.css"
   },
   "scripts": {
     "site.js": "registry/scripts/site.js",
-    "mesh.js": "registry/scripts/mesh.js"
+    "mesh.js": "registry/scripts/mesh.js",
+    "wave.js": "registry/scripts/wave.js"
   },
   "media": {
     "profile.jpg": {

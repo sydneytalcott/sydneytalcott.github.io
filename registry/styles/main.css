@@ -441,6 +441,18 @@ body {
   opacity: 0.5;
 }
 
+/* Wave under Contact (drawn by registry/scripts/wave.js) */
+.contact-wave {
+  margin-bottom: 32px;
+}
+
+.mesh-wave {
+  display: block;
+  width: 100%;
+  aspect-ratio: 680 / 230;
+  color: var(--text-primary);
+}
+
 /* Footer */
 .main-footer {
   display: flex;
