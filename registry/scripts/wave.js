@@ -3,8 +3,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   const SPEED = 1;
   const STYLE = 'dots'; // 'dots' = a dot at each mesh vertex, 'lines' = wireframe
-  const W = 680, H = 75, TOP = 158; // drawing units; TOP crops the empty sky above the crest
-  const SQUASH = 0.5; // vertical compression of the whole wave (1 = original proportions); keep H = 150 * SQUASH
+  const W = 680, H = 84, TOP = 143; // drawing units; TOP crops the empty sky above the crest (sized for AMP = 1.4)
+  const SQUASH = 0.5; // vertical compression of the whole wave (1 = original proportions); H is the visible span times SQUASH
+  const AMP = 1.4; // wave height multiplier (1 = original)
   const NEAR = 0.22; // where the mesh starts in front of the crest (0 = full-depth base, higher = shorter base)
 
   document.querySelectorAll('canvas.mesh-wave').forEach((c) => {
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Coarser mesh and proportionally heavier lines on narrow screens so it stays legible
       const narrow = w < 600;
       COLS = narrow ? 96 : 170;
-      if (STYLE === 'dots') COLS = narrow ? 150 : 300; // denser across, to balance the closely spaced rows
+      if (STYLE === 'dots') { COLS = narrow ? 190 : 520; ROWS = narrow ? 45 : 71; } // far denser across, to balance the closely spaced rows
       ROWS = narrow ? 41 : 61;
       thick = Math.max(1, 0.75 / (w / W));
       px = new Float32Array(COLS * ROWS);
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const ripple = 0.035 * Math.sin(x * 3.1 + y * 15 - t * 1.1)
                    + 0.025 * Math.sin(x * 5.3 - y * 10 + t * 1.4)
                    + 0.02 * Math.sin(y * 26 + t * 0.8);
-      return crest + ripple;
+      return (crest + ripple) * AMP;
     }
 
     function draw(t) {
@@ -64,10 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
         g.fillStyle = g.strokeStyle;
         for (j = 0; j < ROWS; j++) {
           const a = (1 - NEAR) * (1 - j / (ROWS - 1));
-          const r = (0.3 + 0.3 * a) * thick;
+          const r = (0.22 + 0.24 * a) * thick;
           g.globalAlpha = 0.4 + 0.6 * a;
           g.beginPath();
-          for (i = 0; i < COLS; i++) { k = j * COLS + i; g.moveTo(px[k] + r, py[k]); g.arc(px[k], py[k], r, 0, 6.2832); }
+          // Tiny squares read as dots at this size and are much cheaper to draw than arcs
+          for (i = 0; i < COLS; i++) { k = j * COLS + i; g.rect(px[k] - r, py[k] - r, 2 * r, 2 * r); }
           g.fill();
         }
       } else {
