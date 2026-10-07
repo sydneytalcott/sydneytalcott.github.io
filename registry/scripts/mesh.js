@@ -2,14 +2,14 @@
 // Built with WebGL / Three.js (loaded from the work template)
 
 document.addEventListener('DOMContentLoaded', () => {
-  initInteractiveMesh();
+  // Each [data-mesh] container renders one mesh; data-shape picks the geometry
+  document.querySelectorAll('[data-mesh]').forEach(initInteractiveMesh);
 });
 
-function initInteractiveMesh() {
-  const container = document.getElementById('canvasContainer');
-  const canvas = document.getElementById('meshCanvas');
+function initInteractiveMesh(container) {
+  const canvas = container.querySelector('canvas');
 
-  if (!container || !canvas || typeof THREE === 'undefined') return;
+  if (!canvas || typeof THREE === 'undefined') return;
 
   // Scene setup
   const scene = new THREE.Scene();
@@ -69,7 +69,7 @@ function initInteractiveMesh() {
 
   // State Management
   const state = {
-    geometryType: 'terrain', // terrain, geosphere, torusknot, waveplane
+    geometryType: container.dataset.shape || 'terrain', // terrain, geosphere, torusknot, waveplane
     renderMode: 'dual',      // wireframe, solid, dual, points
     speed: 1.0,
     amplitude: 0.8,
@@ -186,52 +186,6 @@ function initInteractiveMesh() {
   // Initial build
   buildGeometry(state.geometryType);
 
-  // Stage controls (present on the work page only)
-  const vertexReadout = document.getElementById('meshVertexCount');
-  const fpsReadout = document.getElementById('meshFps');
-  const updateVertexReadout = () => {
-    if (vertexReadout) vertexReadout.textContent = vertexCount.toLocaleString();
-  };
-  updateVertexReadout();
-
-  const bindGroup = (attr, apply) => {
-    const buttons = document.querySelectorAll('[' + attr + ']');
-    buttons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        apply(btn.getAttribute(attr));
-        buttons.forEach((b) => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
-      });
-    });
-  };
-
-  bindGroup('data-mesh-shape', (type) => {
-    state.geometryType = type;
-    buildGeometry(type);
-    updateVertexReadout();
-  });
-
-  bindGroup('data-mesh-mode', (mode) => {
-    state.renderMode = mode;
-    updateVisibility();
-  });
-
-  const autoRotateBtn = document.getElementById('meshAutoRotate');
-  if (autoRotateBtn) {
-    autoRotateBtn.addEventListener('click', () => {
-      state.autoRotate = !state.autoRotate;
-      autoRotateBtn.setAttribute('aria-pressed', state.autoRotate ? 'true' : 'false');
-    });
-  }
-
-  const resetBtn = document.getElementById('meshReset');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      state.targetRotationX = 0.35;
-      state.targetRotationY = 0;
-      fitCamera(boundRadius);
-    });
-  }
-
   // Mouse & Touch Controls
   canvas.addEventListener('mousedown', (e) => {
     state.isDragging = true;
@@ -311,8 +265,6 @@ function initInteractiveMesh() {
 
   // Animation Loop with Procedural Wave Engine
   let clock = 0;
-  let fpsFrames = 0;
-  let fpsSince = performance.now();
 
   function animate(now) {
     requestAnimationFrame(animate);
@@ -320,13 +272,6 @@ function initInteractiveMesh() {
     const delta = (now - state.lastTime) * 0.001;
     state.lastTime = now;
     clock += delta * state.speed;
-
-    fpsFrames++;
-    if (fpsReadout && now - fpsSince >= 500) {
-      fpsReadout.textContent = Math.round((fpsFrames * 1000) / (now - fpsSince));
-      fpsFrames = 0;
-      fpsSince = now;
-    }
 
     // Auto-rotation & smooth damping
     if (state.autoRotate && !state.isDragging) {

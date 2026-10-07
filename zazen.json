@@ -371,16 +371,6 @@
           "name": "explorationsTitle",
           "label": "Explorations Heading",
           "type": "text"
-        },
-        {
-          "name": "projectTitle",
-          "label": "Project Title",
-          "type": "text"
-        },
-        {
-          "name": "projectIntro",
-          "label": "Project Intro",
-          "type": "textarea"
         }
       ]
     }
@@ -480,9 +470,7 @@
         "cs3Role": "[What you owned, team size.]",
         "cs3Decisions": "[The key trade-off you made.]",
         "cs3Result": "[Measured outcome.]",
-        "explorationsTitle": "Explorations",
-        "projectTitle": "Interactive 3D mesh",
-        "projectIntro": "A generative geometry study in WebGL and Three.js."
+        "explorationsTitle": "Explorations"
       }
     }
   },
