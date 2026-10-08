@@ -30,10 +30,14 @@ const DEFORM = {
   torusknot: 'twist', torus: 'twist', helix: 'twist', trefoil: 'twist'
 };
 
-// Cursor colors: cyan, magenta, yellow and black
+// Hover cursor: a pixel-art orb that twinkles. Browsers can't animate a CSS cursor image, so while the pointer is
+// over a shape the native cursor is hidden and a small sprite element follows the pointer instead.
+// Each hover picks a random color: cyan, magenta, yellow or black.
 const CURSOR_COLORS = ['#00ffff', '#ff00ff', '#ffff00', '#000000'];
-// 8x8 pixel-art orb (X = pixel, . = empty); the gap near the top left reads as a highlight
-const CURSOR_SPRITE = [
+const CURSOR_PIXEL = 2;
+const CURSOR_GRID = 12;
+// 8x8 orb (X = pixel); the gap near the top left reads as a highlight
+const CURSOR_ORB = [
   '..XXXX..',
   '.X.XXXX.',
   'XXXXXXXX',
@@ -43,20 +47,72 @@ const CURSOR_SPRITE = [
   '.XXXXXX.',
   '..XXXX..'
 ];
-const CURSOR_PIXEL = 2;
-function randomColorCursor() {
-  const color = CURSOR_COLORS[Math.floor(Math.random() * CURSOR_COLORS.length)];
-  const size = CURSOR_SPRITE.length * CURSOR_PIXEL;
+// Twinkle frames: the orb, then sparkle rays growing out from its center and shrinking back
+const CURSOR_RAY_LENGTHS = [0, 1, 2, 1];
+const CURSOR_FRAME_MS = 140;
+
+function cursorFrame(color, rayLength) {
+  const cells = new Set();
+  CURSOR_ORB.forEach((row, y) => {
+    [...row].forEach((ch, x) => { if (ch === 'X') cells.add(`${x + 2},${y + 2}`); });
+  });
+  for (let i = 0; i < rayLength; i++) {
+    for (const k of [5, 6]) {
+      cells.add(`${k},${1 - i}`);
+      cells.add(`${k},${10 + i}`);
+      cells.add(`${1 - i},${k}`);
+      cells.add(`${10 + i},${k}`);
+    }
+  }
+  const size = CURSOR_GRID * CURSOR_PIXEL;
   let pixels = '';
-  CURSOR_SPRITE.forEach((row, y) => {
-    [...row].forEach((ch, x) => {
-      if (ch === 'X') pixels += `<rect x="${x * CURSOR_PIXEL}" y="${y * CURSOR_PIXEL}" width="${CURSOR_PIXEL}" height="${CURSOR_PIXEL}"/>`;
-    });
+  cells.forEach((cell) => {
+    const [x, y] = cell.split(',').map(Number);
+    pixels += `<rect x="${x * CURSOR_PIXEL}" y="${y * CURSOR_PIXEL}" width="${CURSOR_PIXEL}" height="${CURSOR_PIXEL}"/>`;
   });
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" ` +
     `fill="${color}" shape-rendering="crispEdges">${pixels}</svg>`;
-  return `url("data:image/svg+xml,${encodeURIComponent(svg)}") ${size / 2} ${size / 2}, grab`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
+
+const sparkleCursor = {
+  el: null,
+  frames: [],
+  timer: null,
+  step: 0,
+  show(x, y) {
+    if (!this.el) {
+      this.el = document.createElement('div');
+      this.el.setAttribute('aria-hidden', 'true');
+      const size = CURSOR_GRID * CURSOR_PIXEL;
+      this.el.style.cssText = `position:fixed;left:0;top:0;width:${size}px;height:${size}px;pointer-events:none;` +
+        'z-index:9999;display:none;image-rendering:pixelated;background-size:100% 100%';
+      document.body.appendChild(this.el);
+    }
+    const color = CURSOR_COLORS[Math.floor(Math.random() * CURSOR_COLORS.length)];
+    this.frames = CURSOR_RAY_LENGTHS.map((n) => cursorFrame(color, n));
+    this.step = 0;
+    this.el.style.backgroundImage = this.frames[0];
+    this.move(x, y);
+    this.el.style.display = 'block';
+    // Visitors who ask for reduced motion get the still orb
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      clearInterval(this.timer);
+      this.timer = setInterval(() => {
+        this.step = (this.step + 1) % this.frames.length;
+        this.el.style.backgroundImage = this.frames[this.step];
+      }, CURSOR_FRAME_MS);
+    }
+  },
+  move(x, y) {
+    const half = (CURSOR_GRID * CURSOR_PIXEL) / 2;
+    this.el.style.transform = `translate(${x - half}px, ${y - half}px)`;
+  },
+  hide() {
+    clearInterval(this.timer);
+    if (this.el) this.el.style.display = 'none';
+  }
+};
 
 function initInteractiveMesh(container) {
   const canvas = container.querySelector('canvas');
@@ -353,9 +409,15 @@ function initInteractiveMesh(container) {
   // Initial build
   buildGeometry(state.geometryType);
 
-  // Hovering a shape gives the cursor a random print-process color (cyan, magenta, yellow or black)
-  canvas.addEventListener('mouseenter', () => {
-    canvas.style.cursor = randomColorCursor();
+  // Hovering a shape swaps the native cursor for the twinkling sprite
+  canvas.addEventListener('mouseenter', (e) => {
+    canvas.style.cursor = 'none';
+    sparkleCursor.show(e.clientX, e.clientY);
+  });
+  canvas.addEventListener('mousemove', (e) => sparkleCursor.move(e.clientX, e.clientY));
+  canvas.addEventListener('mouseleave', () => {
+    canvas.style.cursor = '';
+    sparkleCursor.hide();
   });
 
   // Mouse & Touch Controls
