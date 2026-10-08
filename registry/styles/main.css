@@ -184,6 +184,10 @@ body {
   display: none !important;
 }
 
+.hero-buttons-off .flag-hero-buttons {
+  display: none !important;
+}
+
 /* Hero Section */
 .hero {
   display: flex;

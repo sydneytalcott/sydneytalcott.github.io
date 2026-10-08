@@ -30,8 +30,9 @@
   <script src="/registry/scripts/wave.js"></script>
 </head>
 <body>
+  <!-- Feature flag: set universalTags.heroButtons to "on" in zazen.json to show the two hero buttons (preview with ?heroButtons=on) -->
   <!-- Feature flag: set universalTags.caseStudies to "on" in zazen.json to show case study links -->
-  <div class="app-container case-studies-off">
+  <div class="app-container case-studies-off hero-buttons-off">
     <nav class="main-nav">
   <a href="/" class="nav-brand" aria-label="Sydney Talcott — Home">Sydney Talcott</a>
   <ul class="nav-links desktop-only">
@@ -59,7 +60,7 @@
       <div class="hero-copy">
         <h1 class="hero-title">Product leader for 3D, spatial computing and real estate tech. Trained as an architect.</h1>
         <p class="hero-subtitle">I build the tools and platforms people use to design, visualize and work in three dimensions, most recently at Magic Leap, Zillow and CBRE.</p>
-        <div class="cta-container">
+        <div class="cta-container flag-hero-buttons">
           <a href="/work" class="btn btn-primary">View work</a>
           <a href="#contact" class="btn">Get in touch</a>
         </div>
