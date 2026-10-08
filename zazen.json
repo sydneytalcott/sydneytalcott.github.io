@@ -504,7 +504,8 @@
       "linkedinUrl": "https://www.linkedin.com/in/sydneytalcott/",
       "githubUrl": "https://github.com/sydneytalcott",
       "location": "Based by the ocean, remote worldwide",
-      "caseStudies": "off"
+      "caseStudies": "off",
+      "heroButtons": "off"
     },
     "navigation": "primary",
     "deploy": {

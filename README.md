@@ -28,3 +28,4 @@ This repository is a [Zazen](https://zazen.dev) site for [sydneytalcott.com](htt
 
 ## Feature Flags
 - `caseStudies` (in `zazen.json` under `settings.universalTags`): `"off"` hides the case study links on the home page and the Case studies section on the work page; set it to `"on"` and regenerate the pages to show them. The flagged markup carries the `flag-case-studies` class and is hidden by `.case-studies-off` in `registry/styles/main.css`.
+- `heroButtons` (same place): `"off"` hides the two hero buttons ("View work" and "Get in touch") on the home page; set it to `"on"` and regenerate the pages to show them. To preview without changing the setting, visit the home page with `?heroButtons=on` (handled in `registry/scripts/site.js`). The `.cta-container` carries `flag-hero-buttons`, hidden by `.hero-buttons-off`.
