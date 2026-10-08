@@ -30,18 +30,32 @@ const DEFORM = {
   torusknot: 'twist', torus: 'twist', helix: 'twist', trefoil: 'twist'
 };
 
-// Cursor colors; a thin white ring keeps the black one visible over the black wireframe, and a dark edge keeps yellow visible on white
-const CURSOR_COLORS = [
-  { fill: '#00ffff', edge: '#000000' },
-  { fill: '#ff00ff', edge: '#000000' },
-  { fill: '#ffff00', edge: '#000000' },
-  { fill: '#000000', edge: '#ffffff' }
+// Cursor colors: cyan, magenta, yellow and black
+const CURSOR_COLORS = ['#00ffff', '#ff00ff', '#ffff00', '#000000'];
+// 8x8 pixel-art orb (X = pixel, . = empty); the gap near the top left reads as a highlight
+const CURSOR_SPRITE = [
+  '..XXXX..',
+  '.X.XXXX.',
+  'XXXXXXXX',
+  'XXXXXXXX',
+  'XXXXXXXX',
+  'XXXXXXXX',
+  '.XXXXXX.',
+  '..XXXX..'
 ];
+const CURSOR_PIXEL = 2;
 function randomColorCursor() {
-  const c = CURSOR_COLORS[Math.floor(Math.random() * CURSOR_COLORS.length)];
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">` +
-    `<circle cx="14" cy="14" r="9" fill="${c.fill}" stroke="${c.edge}" stroke-width="1.5"/></svg>`;
-  return `url("data:image/svg+xml,${encodeURIComponent(svg)}") 14 14, grab`;
+  const color = CURSOR_COLORS[Math.floor(Math.random() * CURSOR_COLORS.length)];
+  const size = CURSOR_SPRITE.length * CURSOR_PIXEL;
+  let pixels = '';
+  CURSOR_SPRITE.forEach((row, y) => {
+    [...row].forEach((ch, x) => {
+      if (ch === 'X') pixels += `<rect x="${x * CURSOR_PIXEL}" y="${y * CURSOR_PIXEL}" width="${CURSOR_PIXEL}" height="${CURSOR_PIXEL}"/>`;
+    });
+  });
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" ` +
+    `fill="${color}" shape-rendering="crispEdges">${pixels}</svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}") ${size / 2} ${size / 2}, grab`;
 }
 
 function initInteractiveMesh(container) {
