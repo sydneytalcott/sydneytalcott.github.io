@@ -391,7 +391,7 @@
       "content": {
         "title": "Sydney Talcott",
         "metaDescription": "Sydney Talcott is a product leader for 3D, spatial computing and real estate tech, trained as an architect. Product work at Magic Leap, Zillow and CBRE.",
-        "heroEyebrow": "Open to product leadership roles",
+        "heroEyebrow": "",
         "heroHeadline": "Product leader for 3D, spatial computing and real estate tech. Trained as an architect.",
         "heroSubtitle": "I build the tools and platforms people use to design, visualize and work in three dimensions, most recently at Magic Leap, Zillow and CBRE.",
         "ctaText": "View work",
@@ -503,7 +503,7 @@
       "contactEmail": "sydney.tal@gmail.com",
       "linkedinUrl": "https://www.linkedin.com/in/sydneytalcott/",
       "githubUrl": "https://github.com/sydneytalcott",
-      "location": "Open to remote and hybrid roles",
+      "location": "Based by the ocean, remote worldwide",
       "caseStudies": "off"
     },
     "navigation": "primary",
