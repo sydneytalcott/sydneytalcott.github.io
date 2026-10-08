@@ -451,6 +451,21 @@ function initInteractiveMesh(container) {
       const px = state.pointerRayX;
       const pz = state.pointerRayY;
 
+      // Solids and tubes ripple too: find where the cursor falls on the mesh as it is currently turned,
+      // then push the surface outward in a ring around that spot (same ripple as the sheets)
+      const cx = Math.cos(meshGroup.rotation.x), sx = Math.sin(meshGroup.rotation.x);
+      const cy = Math.cos(meshGroup.rotation.y), sy = Math.sin(meshGroup.rotation.y);
+      const reach = (boundRadius - 2.5) * 1.15;
+      const pointerX = (px / 8) * reach;
+      const pointerY = (pz / 8) * reach;
+      const surfaceRipple = (x, y, z) => {
+        const vx = cy * x + sy * z;
+        const vz1 = -sy * x + cy * z;
+        const vy = cx * y - sx * vz1;
+        const dist = Math.hypot(vx - pointerX, vy - pointerY);
+        return Math.exp(-dist * 0.5) * Math.sin(dist * 2.5 - clock * 6);
+      };
+
       for (let i = 0; i < count; i++) {
         const i3 = i * 3;
         const bx = basePositions[i3];
@@ -477,7 +492,7 @@ function initInteractiveMesh(container) {
           const nz = bz / len;
 
           const pulse = Math.sin(nx * 3 + clock * 2) * Math.cos(ny * 3 + clock * 2) * Math.sin(nz * 3 + clock * 2);
-          const radialDistort = 1.0 + pulse * 0.22 * state.amplitude;
+          const radialDistort = 1.0 + pulse * 0.22 * state.amplitude + surfaceRipple(bx, by, bz) * 0.18;
 
           arr[i3] = bx * radialDistort;
           arr[i3 + 1] = by * radialDistort;
@@ -485,7 +500,7 @@ function initInteractiveMesh(container) {
         } else if (deform === 'twist') {
           // Twisting harmonic ripple along knot
           const angle = Math.atan2(by, bx);
-          const ripple = Math.sin(angle * 5 + clock * 3) * 0.25 * state.amplitude;
+          const ripple = Math.sin(angle * 5 + clock * 3) * 0.25 * state.amplitude + surfaceRipple(bx, by, bz) * 0.18;
           arr[i3] = bx * (1 + ripple);
           arr[i3 + 1] = by * (1 + ripple);
           arr[i3 + 2] = bz * (1 + ripple);
