@@ -35,6 +35,9 @@ function initInteractiveMesh(container) {
 
   if (!canvas || typeof THREE === 'undefined') return;
 
+  // Visitors who ask for reduced motion get a still mesh
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // Scene setup
   const scene = new THREE.Scene();
 
@@ -154,6 +157,7 @@ function initInteractiveMesh(container) {
     pointerRayY: 0,
     lastTime: performance.now()
   };
+  if (reduceMotion) state.targetRotationY = state.currentRotationY = 0.6;
 
   // Mesh objects container
   let meshGroup = new THREE.Group();
@@ -164,6 +168,10 @@ function initInteractiveMesh(container) {
   let pointCloud = null;
   let basePositions = [];
   let vertexCount = 0;
+
+  // data-detail="low" builds the denser shapes with fewer segments; small tiles can't show the difference
+  const detailScale = container.dataset.detail === 'low' ? 0.7 : 1;
+  const seg = (n) => Math.max(3, Math.round(n * detailScale));
 
   // Geometry Generators
   function buildGeometry(type) {
@@ -180,25 +188,25 @@ function initInteractiveMesh(container) {
 
     let geom;
     if (type === 'terrain') {
-      geom = new THREE.PlaneGeometry(16, 16, 52, 52);
+      geom = new THREE.PlaneGeometry(16, 16, seg(52), seg(52));
       geom.rotateX(-Math.PI / 2.3);
     } else if (type === 'geosphere') {
       geom = new THREE.IcosahedronGeometry(4, 4);
     } else if (type === 'torusknot') {
-      geom = new THREE.TorusKnotGeometry(3, 0.9, 120, 24, 2, 3);
+      geom = new THREE.TorusKnotGeometry(3, 0.9, seg(120), seg(24), 2, 3);
     } else if (type === 'waveplane') {
-      geom = new THREE.PlaneGeometry(20, 10, 60, 30);
+      geom = new THREE.PlaneGeometry(20, 10, seg(60), seg(30));
       geom.rotateX(-Math.PI / 3);
     } else if (type === 'torus') {
-      geom = new THREE.TorusGeometry(3, 1.1, 24, 64);
+      geom = new THREE.TorusGeometry(3, 1.1, seg(24), seg(64));
     } else if (type === 'uvsphere') {
-      geom = new THREE.SphereGeometry(4, 32, 20);
+      geom = new THREE.SphereGeometry(4, seg(32), seg(20));
     } else if (type === 'cylinder') {
-      geom = new THREE.CylinderGeometry(2.6, 2.6, 7, 36, 18, true);
+      geom = new THREE.CylinderGeometry(2.6, 2.6, 7, seg(36), seg(18), true);
     } else if (type === 'cone') {
-      geom = new THREE.ConeGeometry(3.6, 7, 36, 14, true);
+      geom = new THREE.ConeGeometry(3.6, 7, seg(36), seg(14), true);
     } else if (type === 'cube') {
-      geom = new THREE.BoxGeometry(5.5, 5.5, 5.5, 10, 10, 10);
+      geom = new THREE.BoxGeometry(5.5, 5.5, 5.5, seg(10), seg(10), seg(10));
     } else if (type === 'octahedron') {
       geom = new THREE.OctahedronGeometry(4.5, 4);
     } else if (type === 'dodecahedron') {
@@ -206,14 +214,14 @@ function initInteractiveMesh(container) {
     } else if (type === 'tetrahedron') {
       geom = new THREE.TetrahedronGeometry(4.8, 4);
     } else if (type === 'saddle') {
-      geom = new THREE.PlaneGeometry(14, 14, 40, 40);
+      geom = new THREE.PlaneGeometry(14, 14, seg(40), seg(40));
       const sp = geom.attributes.position;
       for (let i = 0; i < sp.count; i++) {
         sp.setZ(i, (sp.getX(i) * sp.getX(i) - sp.getY(i) * sp.getY(i)) * 0.07);
       }
       geom.rotateX(-Math.PI / 2.6);
     } else if (type === 'disc') {
-      geom = new THREE.RingGeometry(0.2, 8, 48, 18);
+      geom = new THREE.RingGeometry(0.2, 8, seg(48), seg(18));
       geom.rotateX(-Math.PI / 2.3);
     } else if (type === 'helix') {
       const helix = new THREE.Curve();
@@ -221,7 +229,7 @@ function initInteractiveMesh(container) {
         const a = t * Math.PI * 6;
         return target.set(Math.cos(a) * 2.6, (t - 0.5) * 9, Math.sin(a) * 2.6);
       };
-      geom = new THREE.TubeGeometry(helix, 220, 0.5, 10);
+      geom = new THREE.TubeGeometry(helix, seg(220), 0.5, seg(10));
     } else if (type === 'trefoil') {
       // Figure-eight knot
       const knot = new THREE.Curve();
@@ -230,7 +238,7 @@ function initInteractiveMesh(container) {
         const r = 2 + Math.cos(2 * a);
         return target.set(r * Math.cos(3 * a) * 1.2, r * Math.sin(3 * a) * 1.2, Math.sin(4 * a) * 1.6);
       };
-      geom = new THREE.TubeGeometry(knot, 240, 0.45, 10);
+      geom = new THREE.TubeGeometry(knot, seg(240), 0.45, seg(10));
     } else {
       geom = new THREE.PlaneGeometry(16, 16, 50, 50);
       geom.rotateX(-Math.PI / 2.2);
@@ -390,28 +398,42 @@ function initInteractiveMesh(container) {
       camera.updateProjectionMatrix();
       sizeCanvas();
       fitCamera(boundRadius);
+      // A still mesh only redraws when its size changes
+      if (reduceMotion) requestAnimationFrame(animate);
     }
   });
   resizeObserver.observe(container);
 
   // Animation Loop with Procedural Wave Engine
-  let clock = 0;
+  // data-fps caps the frame rate. Rotation and easing are scaled by the time since the last frame,
+  // so the motion keeps the same speed at any frame rate.
+  const minFrameMs = container.dataset.fps ? 1000 / parseFloat(container.dataset.fps) - 4 : 0;
+  let clock = reduceMotion ? 1.5 : 0;
+  let lastDraw = 0;
 
   function animate(now) {
-    requestAnimationFrame(animate);
+    if (!reduceMotion) requestAnimationFrame(animate);
 
-    const delta = (now - state.lastTime) * 0.001;
+    if (!visible && !reduceMotion) {
+      state.lastTime = now;
+      return;
+    }
+    if (now - lastDraw < minFrameMs) return;
+    lastDraw = now;
+
+    const delta = Math.min((now - state.lastTime) * 0.001, 0.1);
     state.lastTime = now;
-    if (!visible) return;
+    const frames = reduceMotion ? 1 : delta * 60;
     clock += delta * state.speed;
 
     // Auto-rotation & smooth damping
-    if (state.autoRotate && !state.isDragging) {
-      state.targetRotationY += 0.0035 * state.speed;
+    if (state.autoRotate && !state.isDragging && !reduceMotion) {
+      state.targetRotationY += 0.0035 * state.speed * frames;
     }
 
-    state.currentRotationX += (state.targetRotationX - state.currentRotationX) * 0.08;
-    state.currentRotationY += (state.targetRotationY - state.currentRotationY) * 0.08;
+    const ease = 1 - Math.pow(0.92, frames);
+    state.currentRotationX += (state.targetRotationX - state.currentRotationX) * ease;
+    state.currentRotationY += (state.targetRotationY - state.currentRotationY) * ease;
 
     meshGroup.rotation.x = state.currentRotationX;
     meshGroup.rotation.y = state.currentRotationY;
