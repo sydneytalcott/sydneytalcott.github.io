@@ -574,7 +574,7 @@ body {
   color: var(--text-body);
 }
 
-/* Explorations: 2x2 mesh grid */
+/* Explorations: 4x4 mesh grid */
 /* Span the full content width (below the label) so the grid is centered on the page */
 #interactive-3d-mesh .section-body {
   flex-basis: 100%;
@@ -582,23 +582,20 @@ body {
 
 .mesh-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .mesh-tile {
   position: relative;
   width: 100%;
-  height: 360px;
+  aspect-ratio: 1;
   overflow: hidden;
 }
 
 @media (max-width: 768px) {
   .mesh-grid {
-    gap: 8px;
-  }
-  .mesh-tile {
-    height: 200px;
+    gap: 6px;
   }
 }
 
