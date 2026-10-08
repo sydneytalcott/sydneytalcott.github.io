@@ -6,6 +6,30 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-mesh]').forEach(initInteractiveMesh);
 });
 
+// One WebGL renderer is shared by every mesh on the page (browsers cap the number of live WebGL contexts, and the
+// Work page shows 16 meshes). Each mesh renders into the shared canvas, then copies the result to its own 2D canvas.
+let sharedRenderer = null;
+let sharedSize = { w: 0, h: 0 };
+function getSharedRenderer() {
+  if (!sharedRenderer) {
+    sharedRenderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
+    sharedRenderer.setClearColor(0x000000, 0);
+  }
+  return sharedRenderer;
+}
+
+// How each shape moves: 'height' waves a flat sheet, 'radial' pulses a closed solid, 'twist' ripples a tube
+const DEFORM = {
+  terrain: 'height', waveplane: 'height', saddle: 'height', disc: 'height',
+  geosphere: 'radial', uvsphere: 'radial', cylinder: 'radial', cone: 'radial', cube: 'radial',
+  octahedron: 'radial', dodecahedron: 'radial', tetrahedron: 'radial',
+  torusknot: 'twist', torus: 'twist', helix: 'twist', trefoil: 'twist'
+};
+
 function initInteractiveMesh(container) {
   const canvas = container.querySelector('canvas');
 
@@ -77,15 +101,20 @@ function initInteractiveMesh(container) {
   const wheelZoom = container.dataset.wheelZoom !== 'false';
 
   // Renderer setup
-  const renderer = new THREE.WebGLRenderer({
-    canvas: canvas,
-    antialias: true,
-    alpha: true,
-    powerPreference: 'high-performance'
-  });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 0);
+  const renderer = getSharedRenderer();
+  const ctx = canvas.getContext('2d');
+  const pixelRatio = Math.min(window.devicePixelRatio, 2);
+  const sizeCanvas = () => {
+    canvas.width = Math.round(container.clientWidth * pixelRatio);
+    canvas.height = Math.round(container.clientHeight * pixelRatio);
+  };
+  sizeCanvas();
+
+  // Skip updating and drawing a mesh while it is scrolled out of view
+  let visible = true;
+  new IntersectionObserver((entries) => {
+    visible = entries[entries.length - 1].isIntersecting;
+  }).observe(container);
 
   // Lighting
   const ambientLight = new THREE.AmbientLight(0x2a2e3d, 1.2);
@@ -105,7 +134,7 @@ function initInteractiveMesh(container) {
 
   // State Management
   const state = {
-    geometryType: container.dataset.shape || 'terrain', // terrain, geosphere, torusknot, waveplane
+    geometryType: container.dataset.shape || 'terrain', // see buildGeometry for the shape names
     renderMode: container.dataset.render || 'dual', // wireframe, solid, dual, points, dots (white fill + dots)
     speed: 1.0,
     amplitude: 0.8,
@@ -160,6 +189,48 @@ function initInteractiveMesh(container) {
     } else if (type === 'waveplane') {
       geom = new THREE.PlaneGeometry(20, 10, 60, 30);
       geom.rotateX(-Math.PI / 3);
+    } else if (type === 'torus') {
+      geom = new THREE.TorusGeometry(3, 1.1, 24, 64);
+    } else if (type === 'uvsphere') {
+      geom = new THREE.SphereGeometry(4, 32, 20);
+    } else if (type === 'cylinder') {
+      geom = new THREE.CylinderGeometry(2.6, 2.6, 7, 36, 18, true);
+    } else if (type === 'cone') {
+      geom = new THREE.ConeGeometry(3.6, 7, 36, 14, true);
+    } else if (type === 'cube') {
+      geom = new THREE.BoxGeometry(5.5, 5.5, 5.5, 10, 10, 10);
+    } else if (type === 'octahedron') {
+      geom = new THREE.OctahedronGeometry(4.5, 4);
+    } else if (type === 'dodecahedron') {
+      geom = new THREE.DodecahedronGeometry(4.2, 3);
+    } else if (type === 'tetrahedron') {
+      geom = new THREE.TetrahedronGeometry(4.8, 4);
+    } else if (type === 'saddle') {
+      geom = new THREE.PlaneGeometry(14, 14, 40, 40);
+      const sp = geom.attributes.position;
+      for (let i = 0; i < sp.count; i++) {
+        sp.setZ(i, (sp.getX(i) * sp.getX(i) - sp.getY(i) * sp.getY(i)) * 0.07);
+      }
+      geom.rotateX(-Math.PI / 2.6);
+    } else if (type === 'disc') {
+      geom = new THREE.RingGeometry(0.2, 8, 48, 18);
+      geom.rotateX(-Math.PI / 2.3);
+    } else if (type === 'helix') {
+      const helix = new THREE.Curve();
+      helix.getPoint = (t, target = new THREE.Vector3()) => {
+        const a = t * Math.PI * 6;
+        return target.set(Math.cos(a) * 2.6, (t - 0.5) * 9, Math.sin(a) * 2.6);
+      };
+      geom = new THREE.TubeGeometry(helix, 220, 0.5, 10);
+    } else if (type === 'trefoil') {
+      // Figure-eight knot
+      const knot = new THREE.Curve();
+      knot.getPoint = (t, target = new THREE.Vector3()) => {
+        const a = t * Math.PI * 2;
+        const r = 2 + Math.cos(2 * a);
+        return target.set(r * Math.cos(3 * a) * 1.2, r * Math.sin(3 * a) * 1.2, Math.sin(4 * a) * 1.6);
+      };
+      geom = new THREE.TubeGeometry(knot, 240, 0.45, 10);
     } else {
       geom = new THREE.PlaneGeometry(16, 16, 50, 50);
       geom.rotateX(-Math.PI / 2.2);
@@ -317,7 +388,7 @@ function initInteractiveMesh(container) {
     if (w > 0 && h > 0) {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+      sizeCanvas();
       fitCamera(boundRadius);
     }
   });
@@ -331,6 +402,7 @@ function initInteractiveMesh(container) {
 
     const delta = (now - state.lastTime) * 0.001;
     state.lastTime = now;
+    if (!visible) return;
     clock += delta * state.speed;
 
     // Auto-rotation & smooth damping
@@ -353,6 +425,7 @@ function initInteractiveMesh(container) {
       const arr = posAttr.array;
       const count = posAttr.count;
 
+      const deform = DEFORM[state.geometryType] || 'height';
       const px = state.pointerRayX;
       const pz = state.pointerRayY;
 
@@ -362,7 +435,7 @@ function initInteractiveMesh(container) {
         const by = basePositions[i3 + 1];
         const bz = basePositions[i3 + 2];
 
-        if (state.geometryType === 'terrain' || state.geometryType === 'waveplane') {
+        if (deform === 'height') {
           // Harmonic undulating wave function
           const wave1 = Math.sin(bx * 0.6 + clock * 2.2) * Math.cos(bz * 0.6 + clock * 1.8);
           const wave2 = Math.sin((bx + bz) * 0.4 + clock * 1.4) * 0.5;
@@ -374,9 +447,9 @@ function initInteractiveMesh(container) {
 
           const totalZ = (wave1 + wave2 + wave3 + ripple) * state.amplitude;
           arr[i3 + 2] = bz + totalZ;
-        } else if (state.geometryType === 'geosphere') {
+        } else if (deform === 'radial') {
           // Radial pulsating surface deformation
-          const len = Math.sqrt(bx * bx + by * by + bz * bz);
+          const len = Math.sqrt(bx * bx + by * by + bz * bz) || 1;
           const nx = bx / len;
           const ny = by / len;
           const nz = bz / len;
@@ -387,7 +460,7 @@ function initInteractiveMesh(container) {
           arr[i3] = bx * radialDistort;
           arr[i3 + 1] = by * radialDistort;
           arr[i3 + 2] = bz * radialDistort;
-        } else if (state.geometryType === 'torusknot') {
+        } else if (deform === 'twist') {
           // Twisting harmonic ripple along knot
           const angle = Math.atan2(by, bx);
           const ripple = Math.sin(angle * 5 + clock * 3) * 0.25 * state.amplitude;
@@ -402,17 +475,21 @@ function initInteractiveMesh(container) {
         if (m !== targetMesh) {
           m.geometry.attributes.position.array.set(arr);
           m.geometry.attributes.position.needsUpdate = true;
-          if (m.geometry.computeVertexNormals) m.geometry.computeVertexNormals();
         }
       });
 
       targetMesh.geometry.attributes.position.needsUpdate = true;
-      if (targetMesh.geometry.computeVertexNormals) {
-        targetMesh.geometry.computeVertexNormals();
-      }
     }
 
+    // Draw into the shared canvas, then copy the frame to this mesh's own canvas
+    if (sharedSize.w !== canvas.width || sharedSize.h !== canvas.height) {
+      renderer.setPixelRatio(1);
+      renderer.setSize(canvas.width, canvas.height, false);
+      sharedSize = { w: canvas.width, h: canvas.height };
+    }
     renderer.render(scene, camera);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(renderer.domElement, 0, 0);
   }
 
   requestAnimationFrame(animate);
