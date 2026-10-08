@@ -30,6 +30,20 @@ const DEFORM = {
   torusknot: 'twist', torus: 'twist', helix: 'twist', trefoil: 'twist'
 };
 
+// Cursor colors; a thin white ring keeps the black one visible over the black wireframe, and a dark edge keeps yellow visible on white
+const CURSOR_COLORS = [
+  { fill: '#00ffff', edge: '#000000' },
+  { fill: '#ff00ff', edge: '#000000' },
+  { fill: '#ffff00', edge: '#000000' },
+  { fill: '#000000', edge: '#ffffff' }
+];
+function randomColorCursor() {
+  const c = CURSOR_COLORS[Math.floor(Math.random() * CURSOR_COLORS.length)];
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">` +
+    `<circle cx="14" cy="14" r="9" fill="${c.fill}" stroke="${c.edge}" stroke-width="1.5"/></svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}") 14 14, grab`;
+}
+
 function initInteractiveMesh(container) {
   const canvas = container.querySelector('canvas');
 
@@ -324,6 +338,11 @@ function initInteractiveMesh(container) {
 
   // Initial build
   buildGeometry(state.geometryType);
+
+  // Hovering a shape gives the cursor a random print-process color (cyan, magenta, yellow or black)
+  canvas.addEventListener('mouseenter', () => {
+    canvas.style.cursor = randomColorCursor();
+  });
 
   // Mouse & Touch Controls
   canvas.addEventListener('mousedown', (e) => {
