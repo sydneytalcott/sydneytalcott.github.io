@@ -34,7 +34,7 @@ const DEFORM = {
 // over a shape the native cursor is hidden and a small sprite element follows the pointer instead.
 // Each hover picks a random color: cyan, magenta, yellow or black.
 const CURSOR_COLORS = ['#00ffff', '#ff00ff', '#ffff00', '#000000'];
-const CURSOR_PIXEL = 2;
+const CURSOR_PIXEL = 1;
 const CURSOR_GRID = 12;
 // 8x8 orb (X = pixel); the gap near the top left reads as a highlight
 const CURSOR_ORB = [
